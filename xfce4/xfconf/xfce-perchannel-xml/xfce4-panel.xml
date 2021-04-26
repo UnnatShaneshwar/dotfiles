@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="configver" type="int" value="2"/>
+  <property name="panels" type="array">
+    <value type="int" value="1"/>
+    <property name="dark-mode" type="bool" value="true"/>
+    <property name="panel-1" type="empty">
+      <property name="position" type="string" value="p=6;x=13;y=384"/>
+      <property name="length" type="uint" value="100"/>
+      <property name="position-locked" type="bool" value="true"/>
+      <property name="icon-size" type="uint" value="18"/>
+      <property name="size" type="uint" value="25"/>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="7"/>
+        <value type="int" value="2"/>
+        <value type="int" value="15"/>
+        <value type="int" value="6"/>
+        <value type="int" value="8"/>
+        <value type="int" value="12"/>
+        <value type="int" value="13"/>
+      </property>
+      <property name="mode" type="uint" value="2"/>
+      <property name="background-style" type="uint" value="0"/>
+      <property name="background-rgba" type="array">
+        <value type="double" value="0.000000"/>
+        <value type="double" value="0.000000"/>
+        <value type="double" value="0.000000"/>
+        <value type="double" value="1.000000"/>
+      </property>
+      <property name="autohide-behavior" type="uint" value="0"/>
+    </property>
+  </property>
+  <property name="plugins" type="empty">
+    <property name="plugin-6" type="string" value="systray">
+      <property name="square-icons" type="bool" value="true"/>
+      <property name="known-legacy-items" type="array">
+        <value type="string" value="pamac-tray"/>
+        <value type="string" value="clipman"/>
+        <value type="string" value="thunar"/>
+        <value type="string" value="networkmanager applet"/>
+      </property>
+      <property name="hidden-legacy-items" type="array">
+        <value type="string" value="networkmanager applet"/>
+        <value type="string" value="thunar"/>
+        <value type="string" value="clipman"/>
+        <value type="string" value="pamac-tray"/>
+      </property>
+      <property name="known-items" type="array">
+        <value type="string" value="zoom"/>
+        <value type="string" value="vlc"/>
+      </property>
+      <property name="hidden-items" type="array">
+        <value type="string" value="vlc"/>
+        <value type="string" value="zoom"/>
+      </property>
+    </property>
+    <property name="plugin-8" type="string" value="pulseaudio">
+      <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
+      <property name="show-notifications" type="bool" value="true"/>
+      <property name="mpris-players" type="string" value="chrome.instance8732;firefox.instance10898;firefox.instance1133;firefox.instance11485;firefox.instance11612;firefox.instance11884;firefox.instance12131;firefox.instance1247;firefox.instance1301;firefox.instance13130;firefox.instance1318;firefox.instance13263;firefox.instance13285;firefox.instance1461;firefox.instance17653;firefox.instance1819;firefox.instance2010;firefox.instance20568;firefox.instance263352;firefox.instance264209;firefox.instance274399;firefox.instance277329;firefox.instance2803;firefox.instance28627;firefox.instance29711;firefox.instance3403;firefox.instance3988;firefox.instance4424;firefox.instance5070;firefox.instance5333;firefox.instance603;firefox.instance6272;firefox.instance6493;firefox.instance6613;firefox.instance67580;firefox.instance692;firefox.instance7307;firefox.instance75380;firefox.instance76645;firefox.instance774;firefox.instance78019;firefox.instance78793;firefox.instance9619;vlc;vlc.instance47800;vlc.instance56472"/>
+    </property>
+    <property name="plugin-12" type="string" value="clock">
+      <property name="mode" type="uint" value="2"/>
+      <property name="digital-format" type="string" value="&lt;i&gt;%I%n%M&lt;/i&gt;"/>
+    </property>
+    <property name="plugin-7" type="string" value="whiskermenu"/>
+    <property name="plugin-15" type="string" value="separator">
+      <property name="expand" type="bool" value="true"/>
+      <property name="style" type="uint" value="0"/>
+    </property>
+    <property name="plugin-2" type="string" value="docklike"/>
+    <property name="plugin-13" type="string" value="notification-plugin"/>
+    <property name="clipman" type="empty">
+      <property name="tweaks" type="empty">
+        <property name="popup-at-pointer" type="bool" value="false"/>
+      </property>
+    </property>
+  </property>
+</channel>

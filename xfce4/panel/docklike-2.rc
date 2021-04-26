@@ -1,0 +1,9 @@
+[user]
+indicatorOrientation=3
+forceIconSize=true
+iconSize=19
+indicatorStyle=0
+keyComboActive=true
+pinned=/usr/share/applications/thunar.desktop;/usr/share/applications/org.kde.kdenlive.desktop;/usr/share/applications/Alacritty.desktop;/usr/share/applications/visual-studio-code-url-handler.desktop;/home/unnat/.local/share/applications/firefox.desktop;
+noWindowsListIfSingle=true
+onlyDisplayVisible=true
