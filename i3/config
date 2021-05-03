@@ -65,10 +65,10 @@ bindsym Mod1+Tab exec rofi -show
 
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# bindsym $mod+j focus left
+# bindsym $mod+k focus down
+# bindsym $mod+l focus up
+# bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -160,8 +160,17 @@ assign [class="zoom"] $ws7
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Are you sure you want to exit?' -B 'Yes, exit i3' 'i3-msg exit'"
+
+mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
+	bindsym $mod+r exec systemctl reboot
+	bindsym $mod+l exit
+	bindsym $mod+p exec systemctl poweroff
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	}
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -238,11 +247,14 @@ bindsym $mod+Shift+l systemctl shutdown
 bindsym Print exec xfce4-screenshooter -r -m -s /home/unnat/Pictures/Screenshots/
 bindsym Shift+Print exec xfce4-screenshooter -f -m -s /home/unnat/Pictures/Screenshots/
 bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
-bindsym $mod+Mod1+Left exec xrandr --output HDMI1 --off --output VGA1 --mode 1440x900 --pos 0x0 --rotate left --output VIRTUAL1 --off
-bindsym $mod+Mod1+Right exec xrandr --output HDMI1 --off --output VGA1 --mode 1440x900 --pos 0x0 --rotate right --output VIRTUAL1 --off
-bindsym $mod+Mod1+Down exec xrandr --output HDMI1 --off --output VGA1 --mode 1440x900 --pos 0x0 --rotate inverted --output VIRTUAL1 --off
-bindsym $mod+Mod1+Up exec xrandr --output HDMI1 --off --output VGA1 --mode 1440x900 --pos 0x0 --rotate normal --output VIRTUAL1 --off
+#bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+Shift+Tab workspace back_and_forth 
+bindsym $mod+Mod1+Left exec xrandr --output VGA1 --rotate left
+bindsym $mod+Mod1+Right exec xrandr --output VGA1 --rotate right
+bindsym $mod+Mod1+Down exec xrandr --output VGA1 --rotate inverted
+bindsym $mod+Mod1+Up exec xrandr --output VGA1 --rotate normal
+bindsym $mod+semicolon exec emote
+bindsym $mod+l exec i3lock -i ~/Pictures/backgrounds/arch-lockscreen.png
 
 # Disable title bar for some windows
 for_window [class="Microsoft-edge-dev"] border pixel 0
