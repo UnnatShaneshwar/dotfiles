@@ -51,8 +51,8 @@ bindsym $mod+Shift+q kill
 # fource kill a window
 bindsym ctrl+Mod1+q exec xkill
 
-# start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run -lines 8
+# Launch a program
+bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
 
 
 # A more modern dmenu replacement is rofi:
@@ -171,7 +171,6 @@ mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 	}
-bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -236,8 +235,11 @@ bar {
 # Startup programs
 
 exec_always picom --experimental-backend
-exec feh --bg-scale /home/unnat/Pictures/backgrounds/Arch-Linux-Minimal-HD-Wallpaper.png 
+# exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-zhaocan-li-1755243.jpg'
+# exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-vishal-shah-2574643.jpg'
+exec feh --bg-scale '/home/unnat/Pictures/backgrounds/silent_people_have_the_loudest_minds.jpg'
 exec parcellite
+exec xfce4-clipman
 exec google-drive-ocamlfuse ~/GoogleDrive
 # exec "sleep 3; ibus-daemon -drx"
 
@@ -247,7 +249,7 @@ for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Lxappearance"] floating enable
 
 # Keybindings
-bindsym ctrl+Alt+x xkill
+bindsym ctrl+Mod1+x xkill
 bindsym $mod+Shift+l systemctl shutdown
 bindsym Print exec xfce4-screenshooter -r -m -s /home/unnat/Pictures/Screenshots/
 bindsym Shift+Print exec xfce4-screenshooter -f -m -s /home/unnat/Pictures/Screenshots/
@@ -260,6 +262,7 @@ bindsym $mod+Mod1+Down exec xrandr --output VGA1 --rotate inverted
 bindsym $mod+Mod1+Up exec xrandr --output VGA1 --rotate normal
 bindsym $mod+semicolon exec emote
 bindsym $mod+l exec i3lock -i ~/Pictures/backgrounds/arch-lockscreen.png
+bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
 
 # Disable title bar for some windows
 # for_window [class="Microsoft-edge-dev"] border pixel 0
