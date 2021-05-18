@@ -39,10 +39,6 @@ autocmd BufWritePost * :Prettier
 
 """"""""" NERDTree Configuration
 
-"open NERDTree automatically when vim starts
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree
-
 "Don't show node_modules
 let g:NERDTreeIgnore = ['^node_modules$']
 
