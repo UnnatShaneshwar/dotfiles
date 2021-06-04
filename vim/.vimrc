@@ -11,6 +11,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
 
@@ -18,7 +19,7 @@ call plug#end()
 """"""""" Keybindings 
 
 " NERDTree
-nmap <C-n> :NERDTreeToggle<CR>
+nmap <C-b> :NERDTreeToggle<CR>
 
 " NERDCommenter
 vmap ++ <plug>NERDCommenterToggle
@@ -28,7 +29,7 @@ nmap ++ <plug>NERDCommenterToggle
 nmap <C-p> :CtrlP<CR>
 
 " Common
-inoremap jk <ESC>
+inoremap <C-j> <ESC>
 nmap <C-q> :q<CR>
 nmap <C-s> :w<CR>
 
@@ -42,6 +43,9 @@ autocmd BufWritePost * :Prettier
 "Don't show node_modules
 let g:NERDTreeIgnore = ['^node_modules$']
 
+"Show Hidden files
+let NERDTreeShowHidden=1
+
 """"""""" Coc-Prettier configuration
 
 "making a command 'Prettier' to run coc command prettier.formatFile
@@ -50,7 +54,7 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 """"""""" ctrlp Fuzzy finder configuration
 
 " don't show git folder when searching files
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 " j/k will move virtual lines (lines that wrap)
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -60,11 +64,15 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Show line numbers relative to currently selected line
 set relativenumber
-
 set smarttab
 set cindent
 set tabstop=2
 set shiftwidth=2
+
+autocmd InsertEnter,InsertLeave * set cul!
+
+" Don't delay exiting the visual modes
+set timeoutlen=1000 ttimeoutlen=0
 
 " Uses spaces instead of tab characters
 set expandtab
