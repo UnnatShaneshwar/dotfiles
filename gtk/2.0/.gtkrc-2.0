@@ -2,8 +2,8 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/unnat/.gtkrc-2.0.mine"
-gtk-theme-name="Qogir"
-gtk-icon-theme-name="Papirus"
+gtk-theme-name="Materia-light-compact"
+gtk-icon-theme-name="Tela-blue"
 gtk-font-name="SF Pro Text 11"
 gtk-cursor-theme-name="WhiteSur-cursors"
 gtk-cursor-theme-size=0
