@@ -21,18 +21,34 @@ font:
     y: 1
 
 window:
-  dynamic_title: true
   dimensions:
-    columns: 79
-    lines: 26
+    columns: 110
+    lines: 30
   padding:
     x: 6
     y: 6
 
+cursor:
+  style:
+    shape: Block
+    blinking: On
+
 key_bindings:
   - { key: Slash, mods: Control, chars: "++" }
+  - { key: V, mods: Control|Shift, mode: ~Vi, action: Paste }
+  - { key: C, mods: Control|Shift, action: Copy }
+  - { key: F, mods: Control|Shift, mode: ~Search, action: SearchForward }
+  - { key: B, mods: Control|Shift, mode: ~Search, action: SearchBackward }
+  - { key: C, mods: Control|Shift, mode: Vi|~Search, action: ClearSelection }
+  - { key: Insert, mods: Shift, action: PasteSelection }
+  - { key: Key0, mods: Control, action: ResetFontSize }
+  - { key: Equals, mods: Control, action: IncreaseFontSize }
+  - { key: Plus, mods: Control, action: IncreaseFontSize }
+  - { key: NumpadAdd, mods: Control, action: IncreaseFontSize }
+  - { key: Minus, mods: Control, action: DecreaseFontSize }
+  - { key: NumpadSubtract, mods: Control, action: DecreaseFontSize }
 
-background_opacity: 0.97
+background_opacity: 0.95
 
 schemes:
   argonaut: &argonaut # Default colors
@@ -1416,11 +1432,11 @@ schemes:
       white: "0xffffff"
   purify: &purify
     primary:
-      background: "0x011627"
+      background: "0x171c26"
       foreground: "0xFAFAFA"
     selection:
-      text: "0xFAFAFA"
-      background: "0x252834"
+      text: CellForeground
+      background: "0x303442"
     normal:
       black: "0x282C34"
       red: "0xFF6059"
@@ -1475,17 +1491,17 @@ schemes:
 # colors: *seoul256
 # colors: *snazzy
 # colors: *solarized_light
-# colors: *solarized_dark
+#colors: *solarized_dark
 # colors: *sourcerer
-# colors: *taerminal
+#colors: *taerminal
 # colors: *tango
-# colors: *tangoish
-# colors: *tender
+#colors: *tangoish
+#colors: *tender
 # colors: *terminal_app
-# colors: *terminal_app_basic
-# colors: *tomorrow_night
+#colors: *terminal_app_basic
+#colors: *tomorrow_night
 # colors: *tomorrow_night_bright
-# colors: *wombat
-# colors: *xterm
-# colors: *purify
-colors: *night_owl
+#colors: *wombat
+#colors: *xterm
+colors: *purify
+#colors: *night_owl
