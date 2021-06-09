@@ -1,99 +1,52 @@
 set $mod Mod4
-
-# Window title font
-font pango:  Montserrat 10
-
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# Network manager tray
-# exec --no-startup-id nm-applet
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-# Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+set $TEMINAL alacritty
 
-# start a terminal
-bindsym $mod+Return exec alacritty
+#######################
+#     Appearance      #
+#######################
 
-# kill focused window
-bindsym $mod+Shift+q kill
+# Font
+font pango: SF Pro Text 11
 
-# fource kill a window
-bindsym ctrl+Mod1+q exec xkill
+# Colors
+set $bg-color           #0f1a1f
+set $inactive-bg-color  #282A33
+set $t-color            #ffffff
+set $inactive-t-color   #5b5e6b
+set $urgent-bg-color    #ba2238
+set $focus-border       #1f4863
+set $bg-lighter         #253036
 
-# Launch a program
-bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
+# Window colors
+#                         border               background           text              indicator
+#                         --------------------------------------------------------------------
+client.focused            $focus-border        $bg-color            $t-color          00633c
+client.unfocused	        $inactive-bg-color	 $inactive-bg-color   $inactive-t-color	00633c
+client.focused_inactive	  $inactive-bg-color	 $inactive-bg-color   $inactive-t-color	00633c
+client.urgent		          $urgent-bg-color     $urgent-bg-color     $t-color          00633c
 
+# Hide indicator
+hide_edge_borders both
 
-# A more modern dmenu replacement is rofi:
-# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shippiDng a
-# .desktop file. It is a wrapper around dmenu, so you need that installed.
-# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+# i3-bar
+bar {
+  position bottom
+	status_command i3blocks -c /home/unnat/.config/i3/i3blocks.conf
+	colors {
+		background $bg-color
+		#                   border            background        text
+		#                   -----------------------------------------------------
+		focused_workspace   $bg-lighter       $bg-lighter       $t-color
+		inactive_workspace  $bg-lighter       $bg-lighter       $inactive-t-color	
+		urgent_workspace    $urgent-bg-color  $urgent-bg-color  $t-color
+	}	
+}
 
-# switch windows
-bindsym Mod1+Tab exec rofi -show
+#######################
+#     Workspaces      #
+#######################
 
-
-# change focus
-# bindsym $mod+j focus left
-# bindsym $mod+k focus down
-# bindsym $mod+l focus up
-# bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window
-# bindsym $mod+Shift+j move left
-# bindsym $mod+Shift+k move down
-# bindsym $mod+Shift+l move up
-# bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $mod+h split h
-
-# split in vertical orientation
-bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: "
 set $ws2 "2: "
 set $ws3 "3: "
@@ -102,8 +55,6 @@ set $ws5 "5: "
 set $ws6 "6: "
 set $ws7 "7: "
 set $ws8 "8: Other"
-set $ws9 "9"
-set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -114,8 +65,6 @@ bindsym $mod+5 workspace number $ws5
 bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -126,152 +75,106 @@ bindsym $mod+Shift+5 move container to workspace number $ws5
 bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
 
+# Assign specific workspaces to several windows
 assign [class="Code"] $ws2
-# assign [class="Thunar"] $ws5
 assign [class="kdenlive"] $ws6
 assign [class="zoom"] $ws7
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+##################
+#     Modes      #
+##################
 
-mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
-	bindsym $mod+r exec systemctl reboot
-	bindsym $mod+l exit
-	bindsym $mod+p exec systemctl poweroff
-
-	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-	}
-
-# mouse mode
-mode "mouse" {
-        # normal
-        bindsym Up exec xdotool mousemove_relative -- 0 -15
-        bindsym Down exec xdotool mousemove_relative -- 0 15
-        bindsym Right exec xdotool mousemove_relative -- 15 0
-        bindsym Left exec xdotool mousemove_relative -- -15 0
-        # faster(x2)
-        bindsym $mod+Up exec xdotool mousemove_relative -- 0 -30
-        bindsym $mod+Down exec xdotool mousemove_relative -- 0 30
-        bindsym $mod+Right exec xdotool mousemove_relative -- 30 0
-        bindsym $mod+Left exec xdotool mousemove_relative -- -30 0
-        # slower (1/3 normal)
-        bindsym Control+Up exec xdotool mousemove_relative -- 0 -5
-        bindsym Control+Down exec xdotool mousemove_relative -- 0 5
-        bindsym Control+Right exec xdotool mousemove_relative -- 5 0
-        bindsym Control+Left exec xdotool mousemove_relative -- -5 0
-        # click
-        bindsym s exec xdotool click 2 # middle
-        bindsym l exec xdotool click 3 # right
-        bindsym h exec xdotool click 1 # left
-        bindsym k exec xdotool click 4 # wheel up
-        bindsym j exec xdotool click 5 # wheel down
-        bindsym Shift+j exec xdotool click 1 # shift + left = mark
-        bindsym Control+h exec xdotool click 4 # control + wheel up = zoom
-        bindsym Control+l exec xdotool click 5 # control + wheel down = zoom
-        # exit mode
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-bindsym $mod+g mode "mouse"
-
-# resize window (you can also use the mouse for that)
+# Resize Mode
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 2 px or 2 ppt
-        bindsym k resize grow height 2 px or 2 ppt
-        bindsym l resize shrink height 2 px or 2 ppt
-        bindsym semicolon resize grow width 2 px or 2 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 2 px or 2 ppt
         bindsym Down resize grow height 2 px or 2 ppt
         bindsym Up resize shrink height 2 px or 2 ppt
         bindsym Right resize grow width 2 px or 2 ppt
 
-        # back to normal: Enter or Escape or $mod+r
+				# Exit Resize
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Mouse Mode
+mode "mouse" {
 
-set $bg-color		#0f1a1f
-set $inactive-bg-color	#282A33
-set $t-color		#ffffff
-set $inactive-t-color	#5b5e6b
-set $urgent-bg-color	#ba2238
-set $focus-border	#505b8f
-set $bg-lighter		#253036
+	# Setting speed
+	set $slow 8
+	set $quick 14
+	set $fast 50
 
-# Window colors
+	# Mouse movement (slow/fine-tuned)
+	bindsym h exec xdotool mousemove_relative -- -$slow 0
+	bindsym j exec xdotool mousemove_relative 0 $slow
+	bindsym k exec xdotool mousemove_relative -- 0 -$slow
+	bindsym l exec xdotool mousemove_relative $slow 0
 
-#			border			background		text			indicator
-client.focused		$focus-border		$bg-color		$t-color		#00633c
-client.unfocused	$inactive-bg-color	$inactive-bg-color	$inactive-t-color	#00633c
-client.focused_inactive	$inactive-bg-color	$inactive-bg-color	$inactive-t-color	#00633c
-client.urgent		$urgent-bg-color	$urgent-bg-color	$t-color		#00633c
+	# Mouse movement (quicker) 
+	bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
+	bindsym Shift+j exec xdotool mousemove_relative 0 $quick
+	bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
+	bindsym Shift+l exec xdotool mousemove_relative $quick 0
 
-hide_edge_borders both
+	# Mouse movement (fast)
+	bindsym Shift+$mod2+h exec xdotool mousemove_relative -- -$fast 0
+	bindsym Shift+$mod2+j exec xdotool mousemove_relative 0 $fast
+	bindsym Shift+$mod2+k exec xdotool mousemove_relative -- 0 -$fast
+	bindsym Shift+$mod2+l exec xdotool mousemove_relative $fast 0
 
-bar {
-  position bottom
-	status_command i3blocks -c /home/unnat/.config/i3/i3blocks.conf
-	colors {
-		background	$bg-color
-		# seperator	#757575
-		#                       border                  background              text
-		focused_workspace	$bg-lighter		$bg-lighter		$t-color
-		inactive_workspace	$bg-lighter		$bg-lighter		$inactive-t-color	
-		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$t-color
-	}	
+	# Left Click
+	bindsym f exec xdotool click 1
+	# Middle Click
+	bindsym s exec xdotool click 2
+	# Right Click
+	bindsym d exec xdotool click 3
+	# Left Click-and-drag
+	bindsym Shift+f exec xdotool mousedown 1
+	# Middle Click-and-drag 
+	bindsym Shift+s exec xdotool mousedown 2
+	# Right Click-and-drag
+	bindsym Shift+d exec xdotool mousedown 3
+	# Left Drag release
+	bindsym $mod2+f exec xdotool mouseup 1
+	# Middle Drag release
+	bindsym $mod2+d exec xdotool mouseup 2
+	# Right Drag release
+	bindsym $mod2+s exec xdotool mouseup 3
+
+	# Exit
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+g mode "default"
 }
 
-# Startup programs
+###########################
+#    Starupt Programs     #
+###########################
+
 exec setxkbmap -option ctrl:nocaps
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id nm-applet
 exec_always picom --experimental-backend
-# exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-zhaocan-li-1755243.jpg'
-# exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-vishal-shah-2574643.jpg'
-# exec feh --bg-scale '/home/unnat/Pictures/backgrounds/silent_people_have_the_loudest_minds.jpg'
-#exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-gianluca-grisenti-4215100.jpg'
-#exec feh --bg-scale '/home/unnat/Pictures/backgrounds/UWideWallpapers/3440x1440-Dark-Mountain-wallpaper-scaled.jpg'
-exec feh --bg-scale '/home/unnat/Pictures/backgrounds/UWideWallpapers/3440x1440-Dark-Forest-wallpaper-scaled.jpg'
 exec parcellite
 exec xfce4-clipman
 exec numlockx
 exec emote
-# exec google-drive-ocamlfuse ~/GoogleDrive
-# exec "sleep 3; ibus-daemon -drx"
 
-# Windows to be in floating layout by default
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Nm-connection-editor"] floating enable
-for_window [class="Lxappearance"] floating enable
-for_window [class="VirtualBox Manager"] floating enable
+# Background Image
+exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-zhaocan-li-1755243.jpg'
 
-# Keybindings
-bindsym ctrl+Mod1+x xkill
+
+#######################
+#     Keybindings     #
+#######################
+
 bindsym $mod+Shift+l systemctl shutdown
 bindsym Print exec xfce4-screenshooter -r -m -s /home/unnat/Pictures/Screenshots/
 bindsym Shift+Print exec xfce4-screenshooter -f -m -s /home/unnat/Pictures/Screenshots/
 bindsym $mod+Tab workspace next
-#bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+Shift+Tab workspace back_and_forth 
 bindsym $mod+Mod1+Left exec xrandr --output VGA1 --rotate left
 bindsym $mod+Mod1+Right exec xrandr --output VGA1 --rotate right
@@ -280,15 +183,65 @@ bindsym $mod+Mod1+Up exec xrandr --output VGA1 --rotate normal
 bindsym $mod+semicolon exec emote
 bindsym $mod+l exec i3lock -i ~/Pictures/backgrounds/arch-lockscreen.png
 bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
+bindsym $mod+f exec firefox
+bindsym $mod+t exec thunar
+bindsym $mod+Return exec $TEMINAL
+bindsym $mod+Shift+q kill
+bindsym ctrl+Mod1+x xkill
+bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
+bindsym Mod1+Tab exec rofi -show
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
 
-# Disable title bar for some windows
- #for_window [class="Microsoft-edge-dev"] border pixel 0
- for_window [class="firefox"] border pixel 0 
-# for_window [class="Google-chrome"] border pixel 0
-# for_window [class="Opera"] border pixel 0
+# Trigger Modes
+bindsym $mod+g mode "mouse"
+bindsym $mod+r mode "resize"
+
+# Change focused window
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Layouts
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Volume buttons to set volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+###########################
+#     Windows config      #
+###########################
+
+# Disable borders for some windows
+for_window [class="firefox"] border pixel 0
+
+# Padding in Title bar
+for_window [class=".*"] title_format "<span size='smaller'>  %title  </span>"
+
+# Windows to be in floating layout by default
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Lxappearance"] floating enable
+
+# Disable focus on avtivation
+focus_on_window_activation none
 
 # Disable mouse hover focus
 focus_follows_mouse no 
-
-# Disable focus on avtivation for some apps
-focus_on_window_activation none
