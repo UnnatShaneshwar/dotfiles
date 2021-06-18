@@ -10,13 +10,13 @@ set $TEMINAL alacritty
 font pango: SF Pro Text 11
 
 # Colors
-set $bg-color           #0f1a1f
-set $inactive-bg-color  #282A33
+set $bg-color           #282c34
+set $inactive-bg-color  #282c34
 set $t-color            #ffffff
-set $inactive-t-color   #5b5e6b
-set $urgent-bg-color    #ba2238
+set $inactive-t-color   #5c6370
+set $urgent-bg-color    #be5046
 set $focus-border       #1f4863
-set $bg-lighter         #253036
+set $bg-lighter         #323640
 
 # Window colors
 #                         border               background           text              indicator
@@ -30,9 +30,13 @@ client.urgent		          $urgent-bg-color     $urgent-bg-color     $t-color     
 hide_edge_borders both
 
 # i3-bar
+
 bar {
-  position bottom
-	status_command i3blocks -c /home/unnat/.config/i3/i3blocks.conf
+	i3bar_command i3bar
+  position top
+	status_command i3blocks -c /home/unnat/.config/i3blocks/config
+	workspace_min_width 38px
+	strip_workspace_numbers true
 	colors {
 		background $bg-color
 		#                   border            background        text
@@ -42,6 +46,7 @@ bar {
 		urgent_workspace    $urgent-bg-color  $urgent-bg-color  $t-color
 	}	
 }
+
 
 #######################
 #     Workspaces      #
@@ -87,15 +92,15 @@ assign [class="zoom"] $ws7
 
 # Resize Mode
 mode "resize" {
-        bindsym Left resize shrink width 2 px or 2 ppt
-        bindsym Down resize grow height 2 px or 2 ppt
-        bindsym Up resize shrink height 2 px or 2 ppt
-        bindsym Right resize grow width 2 px or 2 ppt
-
-				# Exit Resize
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+	bindsym Left resize shrink width 2 px or 2 ppt
+	bindsym Down resize grow height 2 px or 2 ppt
+	bindsym Up resize shrink height 2 px or 2 ppt
+	bindsym Right resize grow width 2 px or 2 ppt
+	
+	# Exit
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+r mode "default"
 }
 
 
@@ -151,27 +156,26 @@ mode "mouse" {
 }
 
 ###########################
-#    Starupt Programs     #
+#    Startup Programs     #
 ###########################
 
-exec setxkbmap -option ctrl:nocaps
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nm-applet
-exec_always picom --experimental-backend
 exec parcellite
-exec xfce4-clipman
-exec numlockx
 exec emote
+exec numlockx
+exec setxkbmap -option ctrl:nocaps
+exec_always picom --experimental-backend
+exec xmodmap ~/.config/.Xmodmap
 
 # Background Image
-exec feh --bg-scale '/home/unnat/Pictures/backgrounds/pexels-zhaocan-li-1755243.jpg'
+exec feh --bg-fill '/home/unnat/Pictures/backgrounds/pexels-zhaocan-li-1755243.jpg'
 
 
 #######################
 #     Keybindings     #
 #######################
 
-bindsym $mod+Shift+l systemctl shutdown
+bindsym $mod+f fullscreen toggle global
 bindsym Print exec xfce4-screenshooter -r -m -s /home/unnat/Pictures/Screenshots/
 bindsym Shift+Print exec xfce4-screenshooter -f -m -s /home/unnat/Pictures/Screenshots/
 bindsym $mod+Tab workspace next
@@ -180,16 +184,13 @@ bindsym $mod+Mod1+Left exec xrandr --output VGA1 --rotate left
 bindsym $mod+Mod1+Right exec xrandr --output VGA1 --rotate right
 bindsym $mod+Mod1+Down exec xrandr --output VGA1 --rotate inverted
 bindsym $mod+Mod1+Up exec xrandr --output VGA1 --rotate normal
-bindsym $mod+semicolon exec emote
+#bindsym $mod+semicolon exec emote
 bindsym $mod+l exec i3lock -i ~/Pictures/backgrounds/arch-lockscreen.png
+bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
 bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
-bindsym $mod+f exec firefox
-bindsym $mod+t exec thunar
 bindsym $mod+Return exec $TEMINAL
 bindsym $mod+Shift+q kill
 bindsym ctrl+Mod1+x xkill
-bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
-bindsym Mod1+Tab exec rofi -show
 bindsym $mod+h split h
 bindsym $mod+v split v
 bindsym $mod+Shift+space floating toggle
@@ -220,17 +221,17 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # Volume buttons to set volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10% ; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10% ; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
 
 ###########################
 #     Windows config      #
 ###########################
 
 # Disable borders for some windows
-for_window [class="firefox"] border pixel 0
+for_window [class="firefox"] border pixel 2 
 
 # Padding in Title bar
 for_window [class=".*"] title_format "<span size='smaller'>  %title  </span>"
@@ -239,9 +240,16 @@ for_window [class=".*"] title_format "<span size='smaller'>  %title  </span>"
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Lxappearance"] floating enable
+for_window [class="Arandr"] floating enable
 
 # Disable focus on avtivation
 focus_on_window_activation none
 
 # Disable mouse hover focus
 focus_follows_mouse no 
+
+# i3 gaps
+smart_gaps on
+gaps inner 3
+for_window [class=".*"] border pixel 0
+
