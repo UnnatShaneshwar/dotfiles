@@ -21,10 +21,10 @@ set $bg-lighter         #323640
 # Window colors
 #                         border               background           text              indicator
 #                         --------------------------------------------------------------------
-client.focused            $focus-border        $bg-color            $t-color           00633c
-client.unfocused          $inactive-bg-color   $inactive-bg-color   $inactive-t-color  00633c
-client.focused_inactive	  $inactive-bg-color   $inactive-bg-color   $inactive-t-color  00633c
-client.urgent	          $urgent-bg-color     $urgent-bg-color     $t-color           00633c
+client.focused		$focus-border        $bg-color            $t-color           00633c
+client.unfocused	$inactive-bg-color   $inactive-bg-color   $inactive-t-color  00633c
+client.focused_inactive	$inactive-bg-color   $inactive-bg-color   $inactive-t-color  00633c
+client.urgent		$urgent-bg-color     $urgent-bg-color     $t-color           00633c
 
 # Hide indicator
 hide_edge_borders both
