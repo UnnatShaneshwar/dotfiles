@@ -68,6 +68,7 @@ set smarttab
 set cindent
 set tabstop=2
 set shiftwidth=2
+set mouse=a
 
 autocmd InsertEnter,InsertLeave * set cul!
 
