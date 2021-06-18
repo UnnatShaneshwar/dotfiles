@@ -8,16 +8,18 @@
 # Global properties
 separator=true
 separator_block_width=15
-command=~/.config/i3/blocks/$BLOCK_NAME
-separator_block_width=15
-markup=none
 
-
-#[memory]
-#label= 
-#instance=mem;free
-#interval=30
+[date]
+label= 
+command=date '+%a, %d %b'
+interval=86400
 
 [time]
-command=date '+%I:%M %p   |   %d %b '
+command=date '+%I:%M %p'
 interval=60
+
+[volume]
+command=./blocks/audio
+interval=once
+signal=10
+
