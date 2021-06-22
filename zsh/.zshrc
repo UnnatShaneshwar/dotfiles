@@ -1,8 +1,9 @@
 # Created by newuser for 5.8
 
-alias ls="ls --color=auto"
-alias ll="ls -aSf"
-alias l="ls -l"
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias ls='ls --color=auto'
 alias vim="nvim"
 alias vi="nvim"
 alias history="history -E"
@@ -15,6 +16,8 @@ alias clone="git clone"
 alias init="git init"
 # Screen recording with ffmpeg
 alias recordscreen='cd ~/Videos/ScreenRecording; ffmpeg -f x11grab -i :0.0 "$(date '+%d-%b_%I:%M_%p').mp4"'
+# Show active ports
+alias showports='sudo lsof -i -P -n'
 
 # History
 HISTSIZE=5000
@@ -25,16 +28,14 @@ setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
 
-# No character at the end of a partial line
+# No character at the end of a line
 PROMPT_EOL_MARK=''
 
 TERMINAL=alacritty
 
 # Easy command editing keybindings
-zle -N forward-kill-word
-#
 bindkey '^H' backward-kill-word
-bindkey ';5~' forward-kill-word
+bindkey '^[[3~' delete-char
 bindkey ';5D' backward-word
 bindkey ';5C' forward-word
 
@@ -64,4 +65,5 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # ZSH Syntax Highlighting
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

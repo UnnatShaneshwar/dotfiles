@@ -2,7 +2,8 @@ call plug#begin()
 Plug 'rakr/vim-one'
 Plug 'sheerun/vim-polyglot'
 Plug 'mboughaba/i3config.vim'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scrooloose/nerdcommenter'
 call plug#end()
 
 " Keybindings
@@ -10,9 +11,16 @@ inoremap <C-j> <ESC>
 nmap <C-q> :q<CR>
 nmap <C-s> :w<CR>
 
+" Comment lines
+nmap ++ <plug>NERDCommenterToggle
+vmap ++ <plug>NERDCommenterToggle
+
 " Line numbers
 set number
 set relativenumber
+
+" Use mouse to navigate
+set mouse=a
 
 " Theme
 

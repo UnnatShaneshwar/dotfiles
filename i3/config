@@ -109,26 +109,26 @@ mode "mouse" {
 
 	# Setting speed
 	set $slow 8
-	set $quick 14
+	set $quick 27
 	set $fast 50
 
 	# Mouse movement (slow/fine-tuned)
-	bindsym h exec xdotool mousemove_relative -- -$slow 0
-	bindsym j exec xdotool mousemove_relative 0 $slow
-	bindsym k exec xdotool mousemove_relative -- 0 -$slow
-	bindsym l exec xdotool mousemove_relative $slow 0
+	bindsym h exec xdotool mousemove_relative -- -$quick 0
+	bindsym j exec xdotool mousemove_relative 0 $quick
+	bindsym k exec xdotool mousemove_relative -- 0 -$quick
+	bindsym l exec xdotool mousemove_relative $quick 0
 
 	# Mouse movement (quicker) 
-	bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
-	bindsym Shift+j exec xdotool mousemove_relative 0 $quick
-	bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
-	bindsym Shift+l exec xdotool mousemove_relative $quick 0
+	bindsym Shift+h exec xdotool mousemove_relative -- -$slow 0
+	bindsym Shift+j exec xdotool mousemove_relative 0 $slow
+	bindsym Shift+k exec xdotool mousemove_relative -- 0 -$slow
+	bindsym Shift+l exec xdotool mousemove_relative $slow 0
 
 	# Mouse movement (fast)
-	bindsym Shift+$mod2+h exec xdotool mousemove_relative -- -$fast 0
-	bindsym Shift+$mod2+j exec xdotool mousemove_relative 0 $fast
-	bindsym Shift+$mod2+k exec xdotool mousemove_relative -- 0 -$fast
-	bindsym Shift+$mod2+l exec xdotool mousemove_relative $fast 0
+	bindsym Shift+$mod+h exec xdotool mousemove_relative -- -$fast 0
+	bindsym Shift+$mod+j exec xdotool mousemove_relative 0 $fast
+	bindsym Shift+$mod+k exec xdotool mousemove_relative -- 0 -$fast
+	bindsym Shift+$mod+l exec xdotool mousemove_relative $fast 0
 
 	# Left Click
 	bindsym f exec xdotool click 1
@@ -161,14 +161,13 @@ mode "mouse" {
 
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec parcellite
-exec emote
-exec numlockx
-exec setxkbmap -option ctrl:nocaps
+#exec emote
+#exec numlockx
 exec_always picom --experimental-backend
-exec xmodmap ~/.config/.Xmodmap
+exec_always xmodmap ~/.config/.Xmodmap
 
 # Background Image
-exec feh --bg-fill '/home/unnat/Pictures/backgrounds/pexels-zhaocan-li-1755243.jpg'
+exec feh --bg-fill '/home/unnat/Pictures/backgrounds/mountain_21.jpg'
 
 
 #######################
@@ -185,7 +184,6 @@ bindsym $mod+Mod1+Right exec xrandr --output VGA1 --rotate right
 bindsym $mod+Mod1+Down exec xrandr --output VGA1 --rotate inverted
 bindsym $mod+Mod1+Up exec xrandr --output VGA1 --rotate normal
 #bindsym $mod+semicolon exec emote
-bindsym $mod+l exec i3lock -i ~/Pictures/backgrounds/arch-lockscreen.png
 bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
 bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
 bindsym $mod+Return exec $TEMINAL
@@ -226,12 +224,20 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
 
+# Rofi Menus
+bindsym $mod+Mod1+a exec $HOME/.config/rofi/bin/menu_apps
+bindsym $mod+Mod1+n exec $HOME/.config/rofi/bin/menu_network
+bindsym $mod+Mod1+v exec $HOME/.config/rofi/bin/menu_volume
+bindsym $mod+Mod1+t exec $HOME/.config/rofi/bin/menu_time
+
 ###########################
 #     Windows config      #
 ###########################
 
-# Disable borders for some windows
-for_window [class="firefox"] border pixel 2 
+# i3 gaps
+smart_gaps on
+gaps inner 3
+for_window [class=".*"] border pixel 0
 
 # Padding in Title bar
 for_window [class=".*"] title_format "<span size='smaller'>  %title  </span>"
@@ -247,9 +253,4 @@ focus_on_window_activation none
 
 # Disable mouse hover focus
 focus_follows_mouse no 
-
-# i3 gaps
-smart_gaps on
-gaps inner 3
-for_window [class=".*"] border pixel 0
 

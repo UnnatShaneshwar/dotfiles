@@ -1,2 +1,2 @@
 # dotfiles
-My most important configuration files
+Important configuration files on linux

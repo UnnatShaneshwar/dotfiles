@@ -146,7 +146,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>%a</b>\n%s\n\n%b\n%p"
+    format = "%a\n<b>%s</b>\n\n%b\n%p"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
