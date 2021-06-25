@@ -1,0 +1,9 @@
+body {
+	--newtab-textbox-background-color: #31363F !important;
+	--newtab-topsites-background-color: #31363F !important;
+	--newtab-background-button-color: #31363F !important;
+	--newtab-background-button-hover-color: #383D47 !important;
+	--customize-menu-background: #31363F !important;
+	--customize-menu-secondary-action-background: #31363F !important;
+	--customize-menu-secondary-action-background-hover: #383D47 !important;
+}
