@@ -1,2 +1,13 @@
-ip="$(curl -s -m 1 ipinfo.io/ip)"
-echo "$([ -z "$ip" ] && echo "Offline" || echo "Online")"
+#!/bin/bash
+
+if [[ "${BLOCK_BUTTON}" -eq 1 ]];
+then
+  nm-connection-editor
+fi
+
+if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+  echo "Connected"
+else
+  echo "No-connection"
+fi
+

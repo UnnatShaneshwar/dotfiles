@@ -7,24 +7,26 @@ set $TEMINAL alacritty
 #######################
 
 # Font
-font pango: SF Pro Text 11
+font pango: Source Sans Pro 11
 
-# Colors
+# Colors (One Dark)
+set $focus-border       #687081
+set $no-focus-border		#3D4353
 set $bg-color           #282c34
+set $bg-lighter         #323640
 set $inactive-bg-color  #282c34
 set $t-color            #ffffff
 set $inactive-t-color   #5c6370
 set $urgent-bg-color    #be5046
-set $focus-border       #1f4863
-set $bg-lighter         #323640
+set $b_mode_color #2a4861
 
 # Window colors
 #                         border               background           text              indicator
 #                         --------------------------------------------------------------------
-client.focused		$focus-border        $bg-color            $t-color           00633c
-client.unfocused	$inactive-bg-color   $inactive-bg-color   $inactive-t-color  00633c
-client.focused_inactive	$inactive-bg-color   $inactive-bg-color   $inactive-t-color  00633c
-client.urgent		$urgent-bg-color     $urgent-bg-color     $t-color           00633c
+client.focused            $focus-border        $focus-border        $t-color           00633c
+client.unfocused          $no-focus-border     $no-focus-border     $inactive-t-color  00633c
+client.focused_inactive   $no-focus-border     $no-focus-border     $inactive-t-color  00633c
+client.urgent             $urgent-bg-color     $urgent-bg-color     $t-color           00633c
 
 # Hide indicator
 hide_edge_borders both
@@ -32,8 +34,10 @@ hide_edge_borders both
 # i3-bar
 
 bar {
+	font pango: Source Sans Pro 12
 	i3bar_command i3bar
   position top
+	tray_padding 5px
 	status_command i3blocks -c /home/unnat/.config/i3blocks/config
 	workspace_min_width 38px
 	strip_workspace_numbers true
@@ -44,6 +48,7 @@ bar {
 		focused_workspace   $bg-lighter       $bg-lighter       $t-color
 		inactive_workspace  $bg-lighter       $bg-lighter       $inactive-t-color	
 		urgent_workspace    $urgent-bg-color  $urgent-bg-color  $t-color
+		binding_mode        $b_mode_color     $b_mode_color     $t-color	
 	}	
 }
 
@@ -58,8 +63,9 @@ set $ws3 "3: "
 set $ws4 "4: "
 set $ws5 "5: "
 set $ws6 "6: "
-set $ws7 "7: "
-set $ws8 "8: Other"
+set $ws7 "7: "
+set $ws8 "8: "
+set $ws9 "9: Other"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -70,6 +76,7 @@ bindsym $mod+5 workspace number $ws5
 bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -80,11 +87,13 @@ bindsym $mod+Shift+5 move container to workspace number $ws5
 bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
 
 # Assign specific workspaces to several windows
 assign [class="Code"] $ws2
 assign [class="kdenlive"] $ws6
 assign [class="zoom"] $ws7
+assign [class="WebApp-GoogleCalendar0087"] $ws7
 
 ##################
 #     Modes      #
@@ -101,6 +110,14 @@ mode "resize" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 	bindsym $mod+r mode "default"
+}
+
+# Lock workspaces Mode
+mode "lock-workspaces" {
+	bindsym $mod+Tab workspace back_and_forth
+
+	# Exit
+	bindsym $mod+l mode "default"
 }
 
 
@@ -159,15 +176,17 @@ mode "mouse" {
 #    Startup Programs     #
 ###########################
 
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
 exec parcellite
-#exec emote
+exec emote
+#exec sh -c 'XAPP_FORCE_GTKWINDOW_ICON=web-google-calendar firefox --class WebApp-GoogleCalendar0087 --profile /home/unnat/.local/share/ice/firefox/GoogleCalendar0087 --no-remote http://calendar.google.com/'
 #exec numlockx
 exec_always picom --experimental-backend
 exec_always xmodmap ~/.config/.Xmodmap
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Background Image
-exec feh --bg-fill '/home/unnat/Pictures/backgrounds/mountain_21.jpg'
+exec_always feh --bg-scale '/home/unnat/Pictures/backgrounds/wallpaper_14.jpg'
 
 
 #######################
@@ -175,8 +194,6 @@ exec feh --bg-fill '/home/unnat/Pictures/backgrounds/mountain_21.jpg'
 #######################
 
 bindsym $mod+f fullscreen toggle global
-bindsym Print exec xfce4-screenshooter -r -m -s /home/unnat/Pictures/Screenshots/
-bindsym Shift+Print exec xfce4-screenshooter -f -m -s /home/unnat/Pictures/Screenshots/
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace back_and_forth 
 bindsym $mod+Mod1+Left exec xrandr --output VGA1 --rotate left
@@ -188,7 +205,7 @@ bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
 bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
 bindsym $mod+Return exec $TEMINAL
 bindsym $mod+Shift+q kill
-bindsym ctrl+Mod1+x xkill
+bindsym ctrl+Mod1+x exec xkill
 bindsym $mod+h split h
 bindsym $mod+v split v
 bindsym $mod+Shift+space floating toggle
@@ -200,6 +217,7 @@ bindsym $mod+Shift+r restart
 # Trigger Modes
 bindsym $mod+g mode "mouse"
 bindsym $mod+r mode "resize"
+bindsym $mod+l mode "lock-workspaces"
 
 # Change focused window
 bindsym $mod+Left focus left
@@ -219,8 +237,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # Volume buttons to set volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10% ; exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10% ; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% ; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% ; exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
 
@@ -229,15 +247,19 @@ bindsym $mod+Mod1+a exec $HOME/.config/rofi/bin/menu_apps
 bindsym $mod+Mod1+n exec $HOME/.config/rofi/bin/menu_network
 bindsym $mod+Mod1+v exec $HOME/.config/rofi/bin/menu_volume
 bindsym $mod+Mod1+t exec $HOME/.config/rofi/bin/menu_time
+bindsym $mod+Mod1+s exec $HOME/.config/rofi/bin/menu_screenshot
+bindsym $mod+Mod1+q exec $HOME/.config/rofi/bin/menu_quicklinks
 
 ###########################
 #     Windows config      #
 ###########################
 
 # i3 gaps
-smart_gaps on
-gaps inner 3
-for_window [class=".*"] border pixel 0
+#smart_gaps on
+gaps inner 1
+gaps outer 1
+for_window [class=".*"] border pixel 2
+#for_window [floating] border pixel 2
 
 # Padding in Title bar
 for_window [class=".*"] title_format "<span size='smaller'>  %title  </span>"

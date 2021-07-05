@@ -1,8 +1,11 @@
 #!/bin/bash
 
-FORMAT="${BLOCK_INSTANCE:-%H:%M}"
+if [[ "${BLOCK_BUTTON}" -eq 1 ]];
+then
+	galendae
+fi
+
+FORMAT="${BLOCK_INSTANCE:-%I:%M %p}"
 DATETIME=$(date "+${FORMAT}")
 
 echo "${DATETIME}"
-echo "${DATETIME}"
-echo ""

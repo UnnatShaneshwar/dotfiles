@@ -1,23 +1,23 @@
 font:
   normal:
-    family: "Cascadia code PL"
+    family: "Source code pro"
     style: Regular
 
   bold:
-    family: "Cascadia code PL"
+    family: "Source code pro"
     style: Bold
 
   italic:
-    family: "Cascadia code PL"
+    family: "Source code pro"
     style: Italic
 
   bold_italic:
-    family: "Cascadia code PL"
+    family: "Source code pro"
     style: Bold Italic
 
-  size: 13
+  size: 12
   offset:
-    x: 0
+    x: -1
     y: 2
 
 window:

@@ -67,8 +67,6 @@ if [[ "${DISPLAY}" != "perc" ]]; then
 fi
 
 echo "${MEMINFO}"
-echo "${MEMINFO}"
-echo ""
 
 if [[ "${SOURCE_PERC}" -gt "${URGENT_VALUE}" ]]; then
   exit 33

@@ -16,8 +16,6 @@ alias clone="git clone"
 alias init="git init"
 # Screen recording with ffmpeg
 alias recordscreen='cd ~/Videos/ScreenRecording; ffmpeg -f x11grab -i :0.0 "$(date '+%d-%b_%I:%M_%p').mp4"'
-# Show active ports
-alias showports='sudo lsof -i -P -n'
 
 # History
 HISTSIZE=5000
@@ -39,6 +37,14 @@ bindkey '^[[3~' delete-char
 bindkey ';5D' backward-word
 bindkey ';5C' forward-word
 
+# Go to end of line
+bindkey '^E' end-of-line
+
+# CD ../../ to ....
+cd() {
+    builtin cd "${1//../../}"
+}
+
 # PROMPTS
 function precmd {
   parse_git_branch() {
@@ -54,6 +60,16 @@ function precmd {
   PROMPT="%F{green}➥  %F{cyan}  %B%c $(show_git_branch)%b%f"
   #RPROMPT="%F{red}%(?..%? )%F{green}↵"
 }
+
+# Colored man pages
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
 # Environment Path variable
 export PATH="$PATH:$HOME/.config/rofi/bin"
 export PATH="$PATH:/opt/android-studio/bin"
@@ -64,6 +80,11 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
+
 # ZSH Syntax Highlighting
-source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Starship
+#eval "$(starship init zsh)"

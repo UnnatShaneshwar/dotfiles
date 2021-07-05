@@ -9,14 +9,30 @@
 separator=true
 separator_block_width=15
 
-[date]
-label= 
-command=date '+%a, %d %b'
-interval=86400
+#[cpu]
+#label= 
+#command=./blocks/cpu
+#interval=50
+
+#[memory]
+#label= 
+#command=./blocks/memory
+#interal=50
+
+#[date]
+#label= 
+#command=date '+%a, %d %b'
+#interval=86400
 
 [time]
-command=date '+%I:%M %p'
+label= 
+command=./blocks/datetime
 interval=60
+
+[network]
+label= 
+command=./blocks/network
+interval=6
 
 [volume]
 command=./blocks/audio

@@ -4,4 +4,6 @@ ACTIVE_WINDOW=$(xprop -id $(xprop -root _NET_ACTIVE_WINDOW | cut -d ' ' -f 5) WM
 
 if [[ "${ACTIVE_WINDOW}" != "" ]]; then
   echo "${ACTIVE_WINDOW}"
+else
+  echo "Desktop"
 fi

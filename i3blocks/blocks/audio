@@ -1,4 +1,15 @@
-#!/bin/sh
+#!/bin/bash
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  pactl -- set-sink-volume 0 +5%; pkill -SIGRTMIN+10 i3blocks
+# Middle click
+elif [[ "${BLOCK_BUTTON}" -eq 2 ]]; then
+  pactl set-sink-mute 0 toggle; pkill -SIGRTMIN+10 i3blocks
+# Right click
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+  pactl -- set-sink-volume 0 -5%; pkill -SIGRTMIN+10 i3blocks
+fi
 
 VOLUME_MUTE="MUTED"
 VOLUME_LOW=""
