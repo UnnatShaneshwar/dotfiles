@@ -4,22 +4,24 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 alias ls='ls --color=auto'
-alias vim="nvim"
-alias vi="nvim"
-alias history="history -E"
+alias vim='nvim'
+alias vi='nvim'
+alias history='history -E'
 # Git aliases
-alias status="git status";
-alias add="git add";
-alias commit="git commit";
-alias push="git push";
-alias clone="git clone"
-alias init="git init"
+alias status='git status'
+alias add='git add'
+alias commit='git commit'
+alias push='git push'
+alias clone='git clone'
+alias init='git init'
 # Screen recording with ffmpeg
 alias recordscreen='cd ~/Videos/ScreenRecording; ffmpeg -f x11grab -i :0.0 "$(date '+%d-%b_%I:%M_%p').mp4"'
+# Ping 4 times
+alias ping='ping -c 4'
 
 # History
 HISTSIZE=5000
-HISTFILE=~/.zsh_history
+HISTFILE=~/.cache/zsh/.zsh_history
 SAVEHIST=5000
 HISTDUP=erase
 setopt appendhistory
@@ -57,7 +59,8 @@ function precmd {
       echo -e ""
     fi
   }
-  PROMPT="%F{green}➥  %F{cyan}  %B%c $(show_git_branch)%b%f"
+  #PROMPT="%F{blue}  %F{green} %F{cyan}  %B%c $(show_git_branch)%b%f"
+  PROMPT="%F{green} %F{cyan}  %B%c $(show_git_branch)%b%f"
   #RPROMPT="%F{red}%(?..%? )%F{green}↵"
 }
 
