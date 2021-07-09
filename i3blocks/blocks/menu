@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ "$BLOCK_BUTTON" -eq 1 ]];
+then
+	$HOME/.config/rofi/bin/launcher_colorful
+fi;
+
+echo ""

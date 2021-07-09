@@ -9,20 +9,14 @@
 separator=true
 separator_block_width=15
 
-#[cpu]
-#label= 
-#command=./blocks/cpu
-#interval=50
+[window]
+command=xtitle -s
+interval=persist
 
-#[memory]
-#label= 
-#command=./blocks/memory
-#interal=50
-
-#[date]
-#label= 
-#command=date '+%a, %d %b'
-#interval=86400
+#[menu]
+#command=./blocks/menu
+#interval=once
+#min_width=419
 
 [time]
 label= 
@@ -38,4 +32,5 @@ interval=6
 command=./blocks/audio
 interval=once
 signal=10
+
 
