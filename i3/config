@@ -60,10 +60,10 @@ bar {
 set $ws1 "1: "
 set $ws2 "2: "
 set $ws3 "3: "
-set $ws4 "4: "
+set $ws4 "4: "
 set $ws5 "5: "
 set $ws6 "6: "
-set $ws7 "7: "
+set $ws7 "7: "
 set $ws8 "8: "
 set $ws9 "9: Other"
 
@@ -92,8 +92,9 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 # Assign specific workspaces to several windows
 assign [class="Code"] $ws2
 assign [class="kdenlive"] $ws6
-assign [class="zoom"] $ws7
-assign [class="WebApp-GoogleCalendar0087"] $ws7
+assign [class="zoom"] $ws4
+assign [class="WebApp-GoogleCalendar0087"] $ws8
+assign [class="Thunderbird"] $ws4
 
 ##################
 #     Modes      #
@@ -186,7 +187,7 @@ exec_always xmodmap ~/.config/.Xmodmap
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Background Image
-exec_always feh --bg-scale '/home/unnat/Pictures/backgrounds/wallpaper_14.jpg'
+exec_always feh --bg-scale '/home/unnat/Pictures/backgrounds/arch_16.png'
 
 
 #######################
