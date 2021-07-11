@@ -23,7 +23,7 @@ set $b_mode_color #2a4861
 # Window colors
 #                         border               background           text              indicator
 #                         --------------------------------------------------------------------
-client.focused            $focus-border        $focus-border        $t-color           00633c
+client.focused            $focus-border        $focus-border        $t-color           ff0000
 client.unfocused          $no-focus-border     $no-focus-border     $inactive-t-color  00633c
 client.focused_inactive   $no-focus-border     $no-focus-border     $inactive-t-color  00633c
 client.urgent             $urgent-bg-color     $urgent-bg-color     $t-color           00633c
@@ -95,6 +95,7 @@ assign [class="kdenlive"] $ws6
 assign [class="zoom"] $ws4
 assign [class="WebApp-GoogleCalendar0087"] $ws8
 assign [class="Thunderbird"] $ws4
+assign [class="VirtualBox Manager"] $ws7
 
 ##################
 #     Modes      #
@@ -180,10 +181,14 @@ mode "mouse" {
 
 exec parcellite
 exec emote
-#exec sh -c 'XAPP_FORCE_GTKWINDOW_ICON=web-google-calendar firefox --class WebApp-GoogleCalendar0087 --profile /home/unnat/.local/share/ice/firefox/GoogleCalendar0087 --no-remote http://calendar.google.com/'
-#exec numlockx
+
+# Fix screen tearing
 exec_always picom --experimental-backend
+
+# Use right_alt as mod
 exec_always xmodmap ~/.config/.Xmodmap
+
+# Authentication agent
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Background Image
@@ -195,53 +200,57 @@ exec_always feh --bg-scale '/home/unnat/Pictures/backgrounds/arch_16.png'
 #######################
 
 bindsym $mod+f fullscreen toggle global
+bindsym $mod+a focus parent
+bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
+bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Return exec $TEMINAL
+
+# Workspace switching
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace back_and_forth 
+
+# Rotate screen
 bindsym $mod+Mod1+Left exec xrandr --output VGA1 --rotate left
 bindsym $mod+Mod1+Right exec xrandr --output VGA1 --rotate right
 bindsym $mod+Mod1+Down exec xrandr --output VGA1 --rotate inverted
 bindsym $mod+Mod1+Up exec xrandr --output VGA1 --rotate normal
-#bindsym $mod+semicolon exec emote
-bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
-bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
-bindsym $mod+Return exec $TEMINAL
-bindsym $mod+Shift+q kill
-bindsym ctrl+Mod1+x exec xkill
-bindsym $mod+h split h
-bindsym $mod+v split v
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
-bindsym $mod+a focus parent
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r restart
 
 # Trigger Modes
 bindsym $mod+g mode "mouse"
 bindsym $mod+r mode "resize"
-bindsym $mod+l mode "lock-workspaces"
+bindsym $mod+w mode "lock-workspaces"
 
 # Change focused window
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Change split mode
+bindsym $mod+y split v
+bindsym $mod+x split h
 
 # Layouts
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
-# Move focused window
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
 # Volume buttons to set volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% ; exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% ; exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% ; exec pkill -SIGRTMIN+10 i3blocks # UP
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% ; exec pkill -SIGRTMIN+10 i3blocks # DOWN
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks # MUTE
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks # UNMUTE
 
 # Rofi Menus
 bindsym $mod+Mod1+a exec $HOME/.config/rofi/bin/menu_apps
@@ -256,7 +265,6 @@ bindsym $mod+Mod1+q exec $HOME/.config/rofi/bin/menu_quicklinks
 ###########################
 
 # i3 gaps
-#smart_gaps on
 gaps inner 1
 gaps outer 1
 for_window [class=".*"] border pixel 2
