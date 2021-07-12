@@ -13,8 +13,8 @@ set fish_color_command blue
 set fish_color_param brcyan
 set fish_color_valid_path --underline
 set fish_pager_color_description B3A06D yellow
-set fish_color_autosuggestion "#5c6370"
-set fish_color_error "#5c6370"
+set fish_color_autosuggestion "#4b5263"
+set fish_color_error "#929AB2"
 set fish_color_comment "#4b5263"
 set fish_color_selection --background=FFCC66
 set fish_color_search_match --background=FFCC66
@@ -31,6 +31,9 @@ set fish_color_history_current --bold
 #set fish_color_escape 95E6CB
 #set fish_color_cwd 73D0FF
 #set fish_color_cwd_root red
+set __fish_git_prompt_color_branch brmagenta
+set __fish_git_prompt_color_prefix white
+set __fish_git_prompt_color_suffix white
 
 # Key binding mode
 function fish_user_key_bindings
@@ -42,8 +45,20 @@ end
 ### PROMPT ###
 ##############
 
+function parse_git_branch
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+end
+
+#function show_git_branch
+    #if -z (parse_git_branch)
+        #printf " %s %s%s" (set_color brmagenta) (parse_git_branch) (set_color normal)
+    #else
+        #printf ""
+    #end
+#end
+
 function fish_prompt
-    printf '%s %s  %s%s ' (set_color green) (set_color brcyan) (prompt_pwd) (set_color normal)
+    printf '%s %s  %s%s%s ' (set_color green) (set_color brcyan) (prompt_pwd) (fish_git_prompt) (set_color normal)
 end
 
 ###############
@@ -60,7 +75,7 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 # ls
-alias ls='ls --color=auto -F'
+alias ls='ls --color=auto'
 alias l='ls'
 alias la='ls -A'
 alias ll='ls -alF'
@@ -92,3 +107,6 @@ alias ping='ping -c 4'
 # i3 keyboard shortcuts cheatsheet
 alias i3cheatsheet='grep -E "^bindsym" ~/.config/i3/config | grep -vE "^XF86" | less'
 
+
+# Starship prompt
+#starship init fish | source
