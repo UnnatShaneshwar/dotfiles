@@ -7,11 +7,13 @@
 
 # Global properties
 separator=true
-separator_block_width=15
+#separator_block_width=15
+#background=#323640
 
-[window]
-command=xtitle -s
-interval=persist
+#[window]
+#command=xtitle -s
+#interval=persist
+#min_width=419
 
 #[menu]
 #command=./blocks/menu
@@ -32,5 +34,3 @@ interval=6
 command=./blocks/audio
 interval=once
 signal=10
-
-

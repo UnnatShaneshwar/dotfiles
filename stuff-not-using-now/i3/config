@@ -7,7 +7,7 @@ set $TEMINAL alacritty
 #######################
 
 # Font
-font pango: Source Sans Pro 11
+font pango: SF Pro Text 11
 
 # Colors (One Dark)
 set $focus-border       #687081
@@ -34,7 +34,7 @@ hide_edge_borders both
 # i3-bar
 
 bar {
-	font pango: Source Sans Pro 12
+	font pango: SF Pro Text 11
 	i3bar_command i3bar
   position top
 	tray_padding 5px
@@ -65,7 +65,8 @@ set $ws5 "5: "
 set $ws6 "6: "
 set $ws7 "7: "
 set $ws8 "8: "
-set $ws9 "9: Other"
+set $ws9 "9: "
+set $ws10 "10: Other"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -77,6 +78,7 @@ bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -88,14 +90,19 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # Assign specific workspaces to several windows
 assign [class="Code"] $ws2
 assign [class="kdenlive"] $ws6
+assign [class="Blender"] $ws6
+assign [class="Natron"] $ws6
+assign [class="Gimp-2.10"] $ws6
 assign [class="zoom"] $ws4
 assign [class="WebApp-GoogleCalendar0087"] $ws8
 assign [class="Thunderbird"] $ws4
 assign [class="VirtualBox Manager"] $ws7
+assign [class="Virt-manager"] $ws7
 
 ##################
 #     Modes      #
@@ -103,10 +110,10 @@ assign [class="VirtualBox Manager"] $ws7
 
 # Resize Mode
 mode "resize" {
-	bindsym Left resize shrink width 2 px or 2 ppt
-	bindsym Down resize grow height 2 px or 2 ppt
-	bindsym Up resize shrink height 2 px or 2 ppt
-	bindsym Right resize grow width 2 px or 2 ppt
+	bindsym h resize shrink width 2 px or 2 ppt
+	bindsym j resize grow height 2 px or 2 ppt
+	bindsym k resize shrink height 2 px or 2 ppt
+	bindsym l resize grow width 2 px or 2 ppt
 	
 	# Exit
 	bindsym Return mode "default"
@@ -119,7 +126,7 @@ mode "lock-workspaces" {
 	bindsym $mod+Tab workspace back_and_forth
 
 	# Exit
-	bindsym $mod+l mode "default"
+	bindsym $mod+w mode "default"
 }
 
 
@@ -155,18 +162,11 @@ mode "mouse" {
 	bindsym s exec xdotool click 2
 	# Right Click
 	bindsym d exec xdotool click 3
-	# Left Click-and-drag
-	bindsym Shift+f exec xdotool mousedown 1
-	# Middle Click-and-drag 
-	bindsym Shift+s exec xdotool mousedown 2
-	# Right Click-and-drag
-	bindsym Shift+d exec xdotool mousedown 3
-	# Left Drag release
-	bindsym $mod2+f exec xdotool mouseup 1
-	# Middle Drag release
-	bindsym $mod2+d exec xdotool mouseup 2
-	# Right Drag release
-	bindsym $mod2+s exec xdotool mouseup 3
+
+	# Scroll up
+	bindsym e exec xdotool click 4
+	# Scroll down
+	bindsym s exec xdotool click 5
 
 	# Exit
 	bindsym Return mode "default"
@@ -179,20 +179,20 @@ mode "mouse" {
 ###########################
 
 
-exec parcellite
-exec emote
+exec --no-startup-id parcellite
+#exec --no-startup-id emote
 
 # Fix screen tearing
-exec_always picom --experimental-backend
+exec_always --no-startup-id picom --experimental-backend
 
 # Use right_alt as mod
-exec_always xmodmap ~/.config/.Xmodmap
+exec_always --no-startup-id xmodmap ~/.config/.Xmodmap
 
-# Authentication agent
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# Polkit Authentication agent
+exec --no-startup-id lxsession
 
 # Background Image
-exec_always feh --bg-scale '/home/unnat/Pictures/backgrounds/arch_16.png'
+exec_always --no-startup-id feh --bg-scale '/home/unnat/Pictures/backgrounds/w_70.png'
 
 
 #######################
@@ -200,8 +200,8 @@ exec_always feh --bg-scale '/home/unnat/Pictures/backgrounds/arch_16.png'
 #######################
 
 bindsym $mod+f fullscreen toggle global
-bindsym $mod+a focus parent
 bindsym $mod+d exec $HOME/.config/rofi/bin/launcher_colorful
+#bindsym $mod+d exec i3-dmenu-desktop
 bindsym $mod+Shift+e exec $HOME/.config/rofi/bin/powermenu
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
@@ -210,9 +210,22 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Return exec $TEMINAL
 
+# Programs
+bindsym $mod+e exec thunar
+bindsym $mod+b exec brave
+
+# Xkill
+bindsym $mod+shift+x exec xkill
+
 # Workspace switching
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace back_and_forth 
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
 
 # Rotate screen
 bindsym $mod+Mod1+Left exec xrandr --output VGA1 --rotate left
@@ -242,9 +255,9 @@ bindsym $mod+y split v
 bindsym $mod+x split h
 
 # Layouts
-bindsym $mod+s layout stacking
+bindsym $mod+a layout stacking
 bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s layout toggle split
 
 # Volume buttons to set volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% ; exec pkill -SIGRTMIN+10 i3blocks # UP
@@ -253,31 +266,33 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle ; exec p
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 0 toggle ; exec pkill -SIGRTMIN+10 i3blocks # UNMUTE
 
 # Rofi Menus
-bindsym $mod+Mod1+a exec $HOME/.config/rofi/bin/menu_apps
-bindsym $mod+Mod1+n exec $HOME/.config/rofi/bin/menu_network
-bindsym $mod+Mod1+v exec $HOME/.config/rofi/bin/menu_volume
-bindsym $mod+Mod1+t exec $HOME/.config/rofi/bin/menu_time
 bindsym $mod+Mod1+s exec $HOME/.config/rofi/bin/menu_screenshot
-bindsym $mod+Mod1+q exec $HOME/.config/rofi/bin/menu_quicklinks
 
 ###########################
 #     Windows config      #
 ###########################
 
 # i3 gaps
-gaps inner 1
+#gaps inner 0
 gaps outer 1
 for_window [class=".*"] border pixel 2
-#for_window [floating] border pixel 2
+smart_gaps on
 
 # Padding in Title bar
-for_window [class=".*"] title_format "<span size='smaller'>  %title  </span>"
+for_window [class=".*"] title_format "%title"
+
+# Border Radius
+#border_radius 5
 
 # Windows to be in floating layout by default
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Lxappearance"] floating enable
 for_window [class="Arandr"] floating enable
+for_window [class="obs"] floating enable
+for_window [class="winrar.exe"] floating enable
+for_window [class="qBittorrent"] floating enable
+for_window [class="Font-manager"] floating enable
 
 # Disable focus on avtivation
 focus_on_window_activation none

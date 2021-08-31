@@ -4,36 +4,21 @@ end
 
 set fish_greeting
 
-##############
-### COLORS ###
 #############
+## COLORS ###
+############
 
 set fish_color_normal white
 set fish_color_command blue
 set fish_color_param brcyan
 set fish_color_valid_path --underline
-set fish_pager_color_description B3A06D yellow
 set fish_color_autosuggestion "#4b5263"
 set fish_color_error "#929AB2"
 set fish_color_comment "#4b5263"
-set fish_color_selection --background=FFCC66
-set fish_color_search_match --background=FFCC66
-set fish_color_history_current --bold
-#set fish_color_redirection D4BFFF
-#set fish_color_match F28779
-#set fish_color_quote BAE67E
-#set fish_color_end F29E74
-#set fish_color_cancel -r
-#set fish_pager_color_completion normal
-#set fish_color_host normal
-#set fish_color_user brgreen
-#set fish_color_operator FFCC66
-#set fish_color_escape 95E6CB
-#set fish_color_cwd 73D0FF
-#set fish_color_cwd_root red
+set fish_color_search_match --background="#759DF3"
 set __fish_git_prompt_color_branch brmagenta
-set __fish_git_prompt_color_prefix white
-set __fish_git_prompt_color_suffix white
+set __fish_git_prompt_color_prefix cyan
+set __fish_git_prompt_color_suffix cyan
 
 # Key binding mode
 function fish_user_key_bindings
@@ -41,33 +26,33 @@ function fish_user_key_bindings
     #fish_vi_key_bindings
 end
 
+bind \cj beginning-of-line
+bind \ck end-of-line
+
 ###############
 ### PROMPT ###
 ##############
 
-function parse_git_branch
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
-end
-
-#function show_git_branch
-    #if -z (parse_git_branch)
-        #printf " %s %s%s" (set_color brmagenta) (parse_git_branch) (set_color normal)
-    #else
-        #printf ""
-    #end
-#end
+##### Custom Prompt #####
 
 function fish_prompt
-    printf '%s %s  %s%s%s ' (set_color green) (set_color brcyan) (prompt_pwd) (fish_git_prompt) (set_color normal)
+    printf '%s  %s %s  %s%s%s ' (set_color brblue) (set_color green) (set_color blue) (prompt_pwd) (fish_git_prompt) (set_color normal)
 end
 
 ###############
 ### ALIASES ##
 ##############
 
+
+# Touch diary file
+alias touchdia='cd Documents/.diary; touch (date "+%d-%b-%Y"); nvim (date "+%d-%b-%Y")'
+
 # vim and emacs
 alias vim='nvim'
 alias vi='nvim'
+
+# wpm
+alias wpm='wpm --stats-file .cache/wpm/wpm.csv'
 
 # Colorize grep output
 alias grep='grep --color=auto'
@@ -80,10 +65,8 @@ alias l='ls'
 alias la='ls -A'
 alias ll='ls -alF'
 
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
+# microsoft edge
+alias edge='microsoft-edge-dev'
 
 # git
 alias branch='git branch'
@@ -107,6 +90,15 @@ alias ping='ping -c 4'
 # i3 keyboard shortcuts cheatsheet
 alias i3cheatsheet='grep -E "^bindsym" ~/.config/i3/config | grep -vE "^XF86" | less'
 
+##################
+### Keybindings ##
+##################
 
-# Starship prompt
-#starship init fish | source
+bind \c\backspace 'backward-kill-bigword'
+
+
+#############################
+### Envrionment variables ###
+#############################
+
+export QT_QPA_PLATFORMTHEME=qt5ct
