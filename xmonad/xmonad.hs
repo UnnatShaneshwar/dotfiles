@@ -3,15 +3,17 @@
 ------------------------------------------------------------------------
 
 import qualified Data.Map as M
-import Data.Maybe
+import Data.Maybe (fromJust)
+import Data.Maybe (isJust)
 import Data.Monoid
 import System.Exit
 import XMonad
-import XMonad.Actions.CycleWS
-import XMonad.Hooks.DynamicLog
+import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, nextWS, WSType(..), nextScreen, prevScreen)
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
+import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
@@ -41,6 +43,7 @@ myBorderWidth = 1
 
 -- Border colors for unfocused and focused windows
 myNormalBorderColor = "#3D4353"
+
 myFocusedBorderColor = "#e06c75"
 
 -- Mod Key
@@ -55,7 +58,7 @@ myModMask = mod4Mask
 
 myWorkspaces = ["web", "dev", "ter", "dir", "vid", "vm", "other"]
 
-myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1 ..] -- (,) == \x y -> (x,y)
+myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1 ..]
 
 clickable ws = "<action=xdotool key super+" ++ show i ++ ">" ++ ws ++ "</action>"
   where
@@ -117,14 +120,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- Restart xmonad
       ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
       -- Increase volume
-      ((0, 0x1008ff13), spawn "pactl -- set-sink-volume 0 +5%"),
+      ((0, 0x1008ff13), spawn "pactl -- set-sink-volume 0 +5%; ~/.config/xmobar/scripts/volume.sh"),
       -- Decrease volume
-      ((0, 0x1008ff11), spawn "pactl -- set-sink-volume 0 -5%"),
+      ((0, 0x1008ff11), spawn "pactl -- set-sink-volume 0 -5%; ~/.config/xmobar/scripts/volume.sh"),
       -- Toggle Mute
-      ((0, 0x1008ff12), spawn "pactl set-sink-mute 0 toggle")
+      ((0, 0x1008ff12), spawn "pactl set-sink-mute 0 toggle; ~/.config/xmobar/scripts/volume.sh")
     ]
       ++
-
       -- Switch to a workspace & Move window to a workspace
       [ ((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
@@ -159,7 +161,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
 -- Layouts:
 ------------------------------------------------------------------------
 
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| smartBorders Full)
   where
     -- Default tiling algorithm partitions the screen into two panes
     tiled = Tall nmaster delta ratio
@@ -185,6 +187,7 @@ myManageHook =
       className =? "Nm-connection-editor" --> doFloat,
       className =? "Pavucontrol" --> doFloat,
       className =? "Xmessage" --> doFloat,
+      --name =? "File Operation Progress" --> doFloat,
       resource =? "desktop_window" --> doIgnore,
       resource =? "kdesktop" --> doIgnore
     ]
@@ -215,21 +218,21 @@ myLogHook h =
 
 myStartupHook = do
   spawnOnce "picom --experimental-backend &"
-  spawnOnce "xmodmap ~/.config/.Xmodmap &"
+  spawnOnce "~/.config/xmobar/scripts/volume.sh &"
   spawnOnce "feh --bg-scale '/home/unnat/Pictures/backgrounds/w_68.jpeg' &"
   spawnOnce "lxsession &"
+  spawnOnce "trayer --edge top --align right --padding 8 --SetDockType true --SetPartialStrut true --expand true --monitor VGA1 --transparent true --alpha 0 --tint 0x282c34 --widthtype request --height 22 &"
 
 ------------------------------------------------------------------------
 -- Run xmonad
 ------------------------------------------------------------------------
 
 main = do
-  xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobar.config"
+  xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobar.hs"
   xmonad $
     docks
       defaultConfig
-        { -- simple stuff
-          terminal = myTerminal,
+        { terminal = myTerminal,
           focusFollowsMouse = myFocusFollowsMouse,
           clickJustFocuses = myClickJustFocuses,
           borderWidth = myBorderWidth,
@@ -237,14 +240,11 @@ main = do
           workspaces = myWorkspaces,
           normalBorderColor = myNormalBorderColor,
           focusedBorderColor = myFocusedBorderColor,
-          -- key bindings
           keys = myKeys,
           mouseBindings = myMouseBindings,
-          -- hooks, layouts
           layoutHook = myLayout,
           manageHook = myManageHook,
           handleEventHook = myEventHook,
           logHook = myLogHook xmproc,
           startupHook = myStartupHook
         }
-
