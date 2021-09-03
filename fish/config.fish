@@ -1,5 +1,6 @@
 if status is-interactive
-    neofetch
+    #fm6000 -c=bright_blue -r -f ~/.config/fish/arch.txt
+    fm6000 -c=bright_blue -r
 end
 
 set fish_greeting
