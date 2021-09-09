@@ -1,0 +1,12 @@
+/*
+Colors
+*/
+
+* {
+  accent:           #61afef;
+  background:       #282c34;
+  background-light: #323640;
+  foreground:       #abb2bf;
+  on:               #98c379;
+  off:              #e06c75;
+}
