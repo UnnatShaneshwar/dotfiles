@@ -26,5 +26,5 @@ Config
       ],
     sepChar = "%",
     alignSep = "}{",
-    template = " %UnsafeStdinReader% }{ %datetime% | %network% | %volume%%systraypad%"
+    template = "<icon=/home/unnat/.config/xmobar/icons/archlinux-logo-white.xpm /> %UnsafeStdinReader% }{ %datetime% | %network% | %volume%%systraypad%"
   }

@@ -2,19 +2,21 @@
 -- Imports
 ------------------------------------------------------------------------
 
+import Control.Monad (when)
 import qualified Data.Map as M
-import Data.Maybe (fromJust)
-import Data.Maybe (isJust)
+import Data.Maybe (fromJust, isJust)
 import Data.Monoid
 import System.Exit
 import XMonad
-import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, nextWS, WSType(..), nextScreen, prevScreen)
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Actions.CycleWS (Direction1D (..), WSType (..), moveTo, nextScreen, nextWS, prevScreen, shiftTo)
+import XMonad.Config.Dmwit (altMask)
+import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, shorten, wrap, xmobarColor, xmobarPP)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
+import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isFullscreen)
 import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 
@@ -25,6 +27,14 @@ import XMonad.Util.SpawnOnce
 -- Terminal
 myTerminal :: String
 myTerminal = "alacritty"
+
+-- Browser
+myBrowser :: String
+myBrowser = "brave"
+
+-- File Manager
+myFM :: String
+myFM = "thunar"
 
 -- Text Editor
 myEditor :: String
@@ -53,13 +63,11 @@ myModMask = mod4Mask
 -- Workspaces
 ------------------------------------------------------------------------
 
---myWorkspaces = ["", "", "", "", "", "", "", "", "", "Other"]
---myWorkspaces = ["\e007", "\f121", "\f120", "\f086", "\f07b", "\f008", "\f108", "\f249", "\f233", "Other"]
-
 myWorkspaces = ["web", "dev", "ter", "dir", "vid", "vm", "other"]
 
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1 ..]
 
+-- clickable workspaces
 clickable ws = "<action=xdotool key super+" ++ show i ++ ">" ++ ws ++ "</action>"
   where
     i = fromJust $ M.lookup ws myWorkspaceIndices
@@ -70,16 +78,32 @@ clickable ws = "<action=xdotool key super+" ++ show i ++ ">" ++ ws ++ "</action>
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) =
   M.fromList $
-    [ -- launch a terminal
+    [ ------------------------------------------------------------------
+      -- Applications
+      ------------------------------------------------------------------
+
+      -- launch a terminal
       ((modm, xK_Return), spawn $ XMonad.terminal conf),
-      -- rofi application launcher
+      -- launch a web browser
+      ((modm, xK_f), spawn $ myBrowser),
+      -- launch a file manager
+      ((modm, xK_e), spawn $ myFM),
+      -- launch a Texteditor
+      ((modm, xK_n), spawn $ myEditor),
+      ------------------------------------------------------------------
+      -- Rofi menus
+      ------------------------------------------------------------------
+
+      -- Application launcher
       ((modm, xK_d), spawn "~/.config/rofi/bin/app_menu"),
-      -- rofi menu screenshot
+      -- Screenshot menu
       ((modm, xK_s), spawn "~/.config/rofi/bin/screenshot_menu"),
-      -- rofi powermenu
+      -- Power menu
       ((modm .|. shiftMask, xK_e), spawn "~/.config/rofi/bin/power_menu"),
-      -- open file manager
-      ((modm, xK_e), spawn "thunar"),
+      ------------------------------------------------------------------
+      -- Window controls
+      ------------------------------------------------------------------
+
       -- close focused window
       ((modm .|. shiftMask, xK_q), kill),
       -- Rotate through the available layout algorithms
@@ -87,19 +111,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       --  Reset the layouts on the current workspace to default
       ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf),
       -- Resize viewed windows to the correct size
-      ((modm, xK_n), refresh),
+      --((modm, xK_n), refresh),
       -- Move focus to the next window
       ((modm, xK_j), windows W.focusDown),
       -- Move focus to the previous window
       ((modm, xK_k), windows W.focusUp),
       -- Move focus to the master window
       ((modm, xK_m), windows W.focusMaster),
-      -- Swap the focused window and the master window
-      ((modm .|. shiftMask, xK_Return), windows W.swapMaster),
       -- Swap the focused window with the next window
       ((modm .|. shiftMask, xK_j), windows W.swapDown),
       -- Swap the focused window with the previous window
       ((modm .|. shiftMask, xK_k), windows W.swapUp),
+      -- Swap the focused window and the master window
+      ((modm .|. shiftMask, xK_Return), windows W.swapMaster),
       -- Shrink the master area
       ((modm, xK_h), sendMessage Shrink),
       -- Expand the master area
@@ -112,13 +136,34 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_period), sendMessage (IncMasterN (-1))),
       -- Toggle the status bar gap
       ((modm, xK_b), sendMessage ToggleStruts),
-      -- Cycle Workspaces
+      ------------------------------------------------------------------
+      -- Xmonad
+      ------------------------------------------------------------------
+
+      -- Cycle non-empty workspaces
       ((modm, xK_Tab), moveTo Next NonEmptyWS),
+      -- Cycle all workspaces
       ((modm, xK_z), nextWS),
       -- Quit xmonad
       ((modm .|. shiftMask, xK_c), io (exitWith ExitSuccess)),
       -- Restart xmonad
-      ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
+      ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart;"),
+      ------------------------------------------------------------------
+      -- Screen
+      ------------------------------------------------------------------
+
+      -- Rotate left
+      ((modm .|. altMask, xK_Left), spawn "xrandr --output VGA1 --rotate left"),
+      -- Rotate right
+      ((modm .|. altMask, xK_Right), spawn "xrandr --output VGA1 --rotate right"),
+      -- Rotate upside down
+      ((modm .|. altMask, xK_Down), spawn "xrandr --output VGA1 --rotate inverted"),
+      -- Rotate normal
+      ((modm .|. altMask, xK_Up), spawn "xrandr --output VGA1 --rotate normal"),
+      ------------------------------------------------------------------
+      -- Volume
+      ------------------------------------------------------------------
+
       -- Increase volume
       ((0, 0x1008ff13), spawn "pactl -- set-sink-volume 0 +5%; ~/.config/xmobar/scripts/volume.sh"),
       -- Decrease volume
@@ -139,15 +184,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
 
 myMouseBindings (XConfig {XMonad.modMask = modm}) =
   M.fromList $
-    -- mod-button1, Set the window to floating mode and move by dragging
-    [ ( (modm, button1),
-        ( \w ->
-            focus w >> mouseMoveWindow w
-              >> windows W.shiftMaster
+    [ --((modm, button1), (\w -> focus w >> windows W.shiftMaster)),
+      -- mod-button2, Set the window to floating mode and move by dragging
+      ( (modm, button2),
+        ( \w -> do
+            focus w
+            mouseMoveWindow w
+            windows W.shiftMaster
         )
       ),
-      -- mod-button2, Raise the window to the top of the stack
-      ((modm, button2), (\w -> focus w >> windows W.shiftMaster)),
       -- mod-button3, Set the window to floating mode and resize by dragging
       ( (modm, button3),
         ( \w ->
@@ -158,7 +203,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
     ]
 
 ------------------------------------------------------------------------
--- Layouts:
+-- Layouts
 ------------------------------------------------------------------------
 
 myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| smartBorders Full)
@@ -176,18 +221,19 @@ myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| smartBorders Ful
     delta = 3 / 100
 
 ------------------------------------------------------------------------
--- Window rules:
+-- Window rules
 ------------------------------------------------------------------------
 
 myManageHook =
   composeAll
     [ isFullscreen --> doFullFloat,
-      className =? "Lxappearance" --> doFloat,
       className =? "obs" --> doFloat,
       className =? "Nm-connection-editor" --> doFloat,
       className =? "Pavucontrol" --> doFloat,
       className =? "Xmessage" --> doFloat,
-      --name =? "File Operation Progress" --> doFloat,
+      title =? "Confirm to replace files" --> doFloat,
+      className =? "Code" --> doShift (myWorkspaces !! 2),
+      className =? "Gimp" --> doShift (myWorkspaces !! 5),
       resource =? "desktop_window" --> doIgnore,
       resource =? "kdesktop" --> doIgnore
     ]
@@ -217,11 +263,32 @@ myLogHook h =
 ------------------------------------------------------------------------
 
 myStartupHook = do
+  spawn " ~/.config/xmobar/scripts/volpipe.sh &"
   spawnOnce "picom --experimental-backend &"
-  spawnOnce "~/.config/xmobar/scripts/volume.sh &"
   spawnOnce "feh --bg-scale '/home/unnat/Pictures/backgrounds/w_68.jpeg' &"
   spawnOnce "lxsession &"
-  spawnOnce "trayer --edge top --align right --padding 8 --SetDockType true --SetPartialStrut true --expand true --monitor VGA1 --transparent true --alpha 0 --tint 0x282c34 --widthtype request --height 22 &"
+  spawnOnce "emote &"
+  spawnOnce "parcellite &"
+  spawnOnce "xmodmap /home/unnat/.config/Xmodmap &"
+  spawnOnce "trayer --edge top --align right --padding 9 --SetDockType true --SetPartialStrut true --expand true --monitor VGA1 --transparent true --alpha 0 --tint 0x282c34 --widthtype request --height 22 &"
+
+------------------------------------------------------------------------
+-- Named Scratchpads
+------------------------------------------------------------------------
+
+myScratchPads :: [NamedScratchpad]
+myScratchPads =
+  [ NS "terminal" spawnTerm findTerm manageTerm
+  ]
+  where
+    spawnTerm = myTerminal ++ " -t scratchpad"
+    findTerm = title =? "scratchpad"
+    manageTerm = customFloating $ W.RationalRect l t w h
+      where
+        h = 0.9
+        w = 0.9
+        t = 0.95 - h
+        l = 0.95 - w
 
 ------------------------------------------------------------------------
 -- Run xmonad

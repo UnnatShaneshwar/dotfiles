@@ -1,0 +1,76 @@
+# Homepage that vimb opens if started without a URI.
+set home-page=/home/unnat/.config/vimb/homepage/index.html
+
+# Path to the default download directory. If no download directory is set,
+# download will be written into current directory. The following pattern will
+# be expanded if the download is started '~/', '~user', '$VAR' and '${VAR}'.
+set download-path=~/Downloads/
+
+# Command with placeholder '%s' called if form field is opened with $EDITOR to
+# spawn the editor-like `x-terminal-emulator -e vim %s'. To use Gvim as the
+# editor, it's necessary to call it with `-f' to run it in the foreground.
+set editor-command=alacritty -e "nvim %s"
+
+# If enabled the inputbox will be hidden whenever it contains no text.
+set input-autohide=true
+
+# Enable or disable the spell checking feature.
+set spell-checking=true
+
+# Set comma separated list of spell checking languages to be used for
+# spell checking.
+set spell-checking-languages=en,de
+
+# Enable or disable support for WebGL on pages.
+set webgl=true
+
+# While typing a search command, show where the pattern typed so far matches.
+set incsearch=true
+
+# The font family to use as the default for content that does not specify a
+# font.
+set default-font=SF Pro Text
+
+# The font family used as the default for content using monospace font.
+set monospace-font=Cascadia Mono
+
+# The font family used as the default for content using sans-serif font.
+set sans-serif-font=SF Pro Text
+
+# The font family used as the default for content using serif font.
+set serif-font=Source Serif Pro
+
+# The default font size used to display text.
+set font-size=16
+
+# Default font size for the monospace font.
+set monospace-font-size=13
+
+# Default Full-Content zoom level in percent. Default is 100.
+set default-zoom=100
+
+# Shortcuts allow the opening of an URI built up from a named template with
+# additional parameters.
+shortcut-add g=http://www.google.com/search?q=$0
+shortcut-add y=http://www.youtube.com/results?search_query=$0
+
+# Set the shortcut as the default, that is the shortcut to be used if no
+# shortcut is given and the string to open is not an URI.
+shortcut-default duck
+
+# Map page zoom in normal mode to keys commonly used across applications
+# + (zoom in), - (zoom out), = (zoom reset)
+nmap + zI
+nmap - zO
+nmap = zz
+
+# GUI color settings
+# Color scheme: Base16 Eighties (https://github.com/chriskempson/base16)
+set completion-css=color:#d3d0c8;background-color:#393939;font:12pt Cascadia Mono;
+set completion-hover-css=color:#d3d0c8;background-color:#393939;font:12pt Cascadia Mono;
+set completion-selected-css=color:#d3d0c8;background-color:#515151;font:12pt Cascadia Mono;
+set input-css=color:#d3d0c8;background-color:#393939;font:12pt Cascadia Mono;
+set input-error-css=color:#f2777a;background-color:#393939;font:12pt Cascadia Mono;
+set status-css=color:#ffcc66;background-color:#393939;font:12pt Cascadia Mono;
+set status-ssl-css=color:#99cc99;background-color:#393939;font:12pt Cascadia Mono;
+set status-ssl-invalid-css=color:#f2777a;background-color:#393939;font:12pt Cascadia Mono;

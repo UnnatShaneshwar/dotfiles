@@ -27,14 +27,14 @@ case $chosen in
         ;;
     $area)
 		if [[ -f /usr/bin/maim ]]; then
-			maim -s | tee ~/Pictures/Screenshots/$(date +%s).pngection clipboard -t image/png -i
+			maim -s | tee ~/Pictures/Screenshots/$(date +%s).png | xclip -selection clipboard -t image/png -i
 		else
 			msg
 		fi
         ;;
     $window)
 		if [[ -f /usr/bin/maim ]]; then
-			maim -i $(xdotool getactivewindow) | tee ~/Pictures/Screenshots/$(date +%s).pngection clipboard -t image/png -i
+			maim -i $(xdotool getactivewindow) | tee ~/Pictures/Screenshots/$(date +%s).png | xclip -selection clipboard -t image/png -i
 		else
 			msg
 		fi
