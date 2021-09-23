@@ -8,6 +8,7 @@ import Data.Maybe (fromJust, isJust)
 import Data.Monoid
 import System.Exit
 import XMonad
+import XMonad.Layout
 import XMonad.Actions.CycleWS (Direction1D (..), WSType (..), moveTo, nextScreen, nextWS, prevScreen, shiftTo)
 import XMonad.Config.Dmwit (altMask)
 import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, shorten, wrap, xmobarColor, xmobarPP)
@@ -30,7 +31,7 @@ myTerminal = "alacritty"
 
 -- Browser
 myBrowser :: String
-myBrowser = "brave"
+myBrowser = "firefox"
 
 -- File Manager
 myFM :: String
@@ -85,11 +86,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- launch a terminal
       ((modm, xK_Return), spawn $ XMonad.terminal conf),
       -- launch a web browser
-      ((modm, xK_f), spawn $ myBrowser),
+      ((modm, xK_a), spawn $ myBrowser),
       -- launch a file manager
       ((modm, xK_e), spawn $ myFM),
       -- launch a Texteditor
       ((modm, xK_n), spawn $ myEditor),
+
       ------------------------------------------------------------------
       -- Rofi menus
       ------------------------------------------------------------------
@@ -100,6 +102,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_s), spawn "~/.config/rofi/bin/screenshot_menu"),
       -- Power menu
       ((modm .|. shiftMask, xK_e), spawn "~/.config/rofi/bin/power_menu"),
+
       ------------------------------------------------------------------
       -- Window controls
       ------------------------------------------------------------------
@@ -110,8 +113,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_space), sendMessage NextLayout),
       --  Reset the layouts on the current workspace to default
       ((modm .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf),
-      -- Resize viewed windows to the correct size
-      --((modm, xK_n), refresh),
       -- Move focus to the next window
       ((modm, xK_j), windows W.focusDown),
       -- Move focus to the previous window
@@ -135,7 +136,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- Deincrement the number of windows in the master area
       ((modm, xK_period), sendMessage (IncMasterN (-1))),
       -- Toggle the status bar gap
-      ((modm, xK_b), sendMessage ToggleStruts),
+      ((modm, xK_v), sendMessage ToggleStruts),
+
       ------------------------------------------------------------------
       -- Xmonad
       ------------------------------------------------------------------
@@ -147,7 +149,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- Quit xmonad
       ((modm .|. shiftMask, xK_c), io (exitWith ExitSuccess)),
       -- Restart xmonad
-      ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart;"),
+      ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
+
       ------------------------------------------------------------------
       -- Screen
       ------------------------------------------------------------------
@@ -160,6 +163,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm .|. altMask, xK_Down), spawn "xrandr --output VGA1 --rotate inverted"),
       -- Rotate normal
       ((modm .|. altMask, xK_Up), spawn "xrandr --output VGA1 --rotate normal"),
+
       ------------------------------------------------------------------
       -- Volume
       ------------------------------------------------------------------
@@ -206,7 +210,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
 -- Layouts
 ------------------------------------------------------------------------
 
-myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| smartBorders Full)
+myLayout = avoidStruts (smartBorders tiled ||| smartBorders Full ||| Mirror tiled )
   where
     -- Default tiling algorithm partitions the screen into two panes
     tiled = Tall nmaster delta ratio
@@ -230,10 +234,13 @@ myManageHook =
       className =? "obs" --> doFloat,
       className =? "Nm-connection-editor" --> doFloat,
       className =? "Pavucontrol" --> doFloat,
+      className =? "Tk" --> doFloat,
       className =? "Xmessage" --> doFloat,
       title =? "Confirm to replace files" --> doFloat,
-      className =? "Code" --> doShift (myWorkspaces !! 2),
-      className =? "Gimp" --> doShift (myWorkspaces !! 5),
+      title =? "File Operation Progress" --> doFloat,
+      className =? "Code" --> doShift (myWorkspaces !! 1),
+      className =? "Gimp" --> doShift (myWorkspaces !! 4),
+      className =? "kdenlive" --> doShift (myWorkspaces !! 4),
       resource =? "desktop_window" --> doIgnore,
       resource =? "kdesktop" --> doIgnore
     ]
@@ -263,13 +270,10 @@ myLogHook h =
 ------------------------------------------------------------------------
 
 myStartupHook = do
-  spawn " ~/.config/xmobar/scripts/volpipe.sh &"
-  spawnOnce "picom --experimental-backend &"
-  spawnOnce "feh --bg-scale '/home/unnat/Pictures/backgrounds/w_68.jpeg' &"
+  spawn "~/.config/xmobar/scripts/volpipe.sh &"
   spawnOnce "lxsession &"
   spawnOnce "emote &"
   spawnOnce "parcellite &"
-  spawnOnce "xmodmap /home/unnat/.config/Xmodmap &"
   spawnOnce "trayer --edge top --align right --padding 9 --SetDockType true --SetPartialStrut true --expand true --monitor VGA1 --transparent true --alpha 0 --tint 0x282c34 --widthtype request --height 22 &"
 
 ------------------------------------------------------------------------
@@ -298,7 +302,7 @@ main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobar.hs"
   xmonad $
     docks
-      defaultConfig
+      def
         { terminal = myTerminal,
           focusFollowsMouse = myFocusFollowsMouse,
           clickJustFocuses = myClickJustFocuses,

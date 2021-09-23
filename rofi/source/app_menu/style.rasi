@@ -14,7 +14,15 @@ configuration {
 	sidebar-mode: 					        false;
 }
 
-@import "colors.rasi"
+// colors
+* {
+  al:  #00000000;
+  bg:  #282c34ff;
+  se:  #abb2bfff;
+  fg:  #abb2bfff;
+  ac:  #61afefff;
+  bd:  #61afef55;
+}
 
 window {
   transparency:                   "real";
@@ -34,7 +42,7 @@ prompt {
 	padding: 						            0.30% 1% 0% -0.5%;
 	background-color: 				      @al;
 	text-color: 					          @fg;
-	font:							              "FontAwesome 11";
+	font:							              "Font Awesome 5 Free Solid 11";
 }
 
 entry {
@@ -94,10 +102,16 @@ element-icon {
 }
 
 element-text {
+  background-color:               @al;
+  text-color:                     @fg;
   expand:                         true;
   horizontal-align:               0;
   vertical-align:                 0.5;
   margin:                         0% 0.25% 0% 0.25%;
+}
+
+element-text selected {
+  text-color:                     @bg;
 }
 
 element selected {

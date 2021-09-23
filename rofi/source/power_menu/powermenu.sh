@@ -54,7 +54,7 @@ case $chosen in
         ;;
     $lock)
 		if [[ -f /usr/bin/i3lock ]]; then
-			i3lock -i ~/Pictures/backgrounds/arch-lockscreen.png
+			i3lock
 		fi
         ;;
     $suspend)
