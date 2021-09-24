@@ -1,6 +1,5 @@
 if status is-interactive
-    #fm6000 -c=bright_blue -r -f ~/.config/fish/arch.txt
-    fm6000 -c=bright_blue -r
+    #fm6000 -c=bright_blue -dog
 end
 
 set fish_greeting
@@ -33,11 +32,10 @@ bind \ck end-of-line
 ###############
 ### PROMPT ###
 ##############
-
 ##### Custom Prompt #####
 
 function fish_prompt
-    printf '%s  %s %s  %s%s%s ' (set_color brblue) (set_color green) (set_color blue) (prompt_pwd) (fish_git_prompt) (set_color normal)
+    printf '%s %s  %s%s%s ' (set_color green) (set_color blue) (prompt_pwd) (fish_git_prompt) (set_color normal)
 end
 
 ###############
@@ -48,12 +46,18 @@ end
 # Touch diary file
 alias touchdia='cd Documents/.diary; touch (date "+%d-%b-%Y"); nvim (date "+%d-%b-%Y")'
 
-# vim and emacs
+# Find xmonad process and kill
+alias killxmonad='kill (ps aux | grep xmonad | awk \'NR==1{print $2}\')'
+
+# Pacman 
+alias pac='sudo pacman'
+
+# vim
 alias vim='nvim'
-alias vi='nvim'
+alias v='nvim'
 
 # wpm
-alias wpm='wpm --stats-file .cache/wpm/wpm.csv'
+alias wpm='python -m wpm --stats-file .cache/wpm/wpm.csv'
 
 # Colorize grep output
 alias grep='grep --color=auto'
@@ -65,9 +69,6 @@ alias ls='ls --color=auto'
 alias l='ls'
 alias la='ls -A'
 alias ll='ls -alF'
-
-# microsoft edge
-alias edge='microsoft-edge-dev'
 
 # git
 alias branch='git branch'
@@ -88,18 +89,30 @@ alias recordscreen='cd ~/Videos/ScreenRecording; ffmpeg -f x11grab -i :0.0 "(dat
 # Ping 4 times
 alias ping='ping -c 4'
 
-# i3 keyboard shortcuts cheatsheet
-alias i3cheatsheet='grep -E "^bindsym" ~/.config/i3/config | grep -vE "^XF86" | less'
-
 ##################
 ### Keybindings ##
 ##################
 
 bind \c\backspace 'backward-kill-bigword'
 
+################
+### ENV VARS ###
+################
 
-#############################
-### Envrionment variables ###
-#############################
-
+export TERMINAL=alacritty
 export QT_QPA_PLATFORMTHEME=qt5ct
+
+# XMonad dirs
+export XMONAD_CONFIG_DIR=~/.config/xmonad/
+export XMONAD_DATA_DIR=~/.config/xmonad/
+export XMONAD_CACHE_DIR=~/.cache/xmonad/
+
+# PATH var
+export PATH="$PATH:/home/unnat/.local/bin:/home/unnat/.config/lemonbar/bin/"
+
+# BSPWM Lemonbar
+export PANEL_FIFO=/tmp/panel-fifo
+export PANEL_HEIGHT=22
+export PANEL_FONT="Cascadia Mono"
+export PANEL_WM_NAME=bspwm_panel
+
