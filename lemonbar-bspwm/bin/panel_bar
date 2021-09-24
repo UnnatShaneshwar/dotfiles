@@ -6,11 +6,17 @@ num_mon=$(bspc query -M | wc -l)
 
 while read -r line ; do
 	case $line in
-		S*)
-			# time output
-			time="%{F-}%{B$COLOR_BLOCK}%{U$COLOR_SYS}%{+u} ${line#?} %{B-}%{F-}"
-			;;
 		T*)
+			# time output
+			time="${line#?}%{B-}%{F-}%{U-}"
+			;;
+		N*)
+			# network output
+			network="${line#?}%{B-}%{F-}%{U-}"
+			;;
+		V*)
+			# volume output
+			volume="${line#?}%{B-}%{F-}%{U-}"
 			;;
 		W*)
 			# bspwm's state
@@ -110,6 +116,6 @@ while read -r line ; do
 			done
 			;;
 	esac
-	printf "%s\n" "%{l}${wm}%{c}${time}"
+	printf "%s\n" "%{l}${wm}%{r}${network} ${volume} ${time}"
 	sleep 0.2;
 done

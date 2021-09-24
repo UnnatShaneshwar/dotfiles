@@ -8,27 +8,11 @@ SOUND_LEVEL=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
     head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
 MUTED=$(pactl list sinks | awk '/Mute/ { print $2 }')
 
-ICON=$VOLUME_MUTE
+. panel_colors
 
 if [ "$MUTED" = "yes" ]
 then
-    ICON="$VOLUME_MUTE"
-    SOUND_LEVEL="X"
+    echo "V%{F-}%{B$COLOR_BLOCK}%{U$COLOR_N_VOL}%{+u} MUTED " | tee $PANEL_FIFO
 else
-    if [ "$SOUND_LEVEL" -lt 34 ]
-    then
-        ICON="$VOLUME_LOW"
-    elif [ "$SOUND_LEVEL" -lt 67 ]
-    then
-        ICON="$VOLUME_MID"
-    else
-        ICON="$VOLUME_HIGH"
-    fi
-fi
-
-if [ "$MUTED" = "yes" ]
-then
-    echo "%{F$COLOR_N_VOL}%{B$COLOR_BLOCK}%{U$COLOR_N_VOL}%{+u}$ICON $SOUND_LEVEL" | tee /tmp/.volume-pipe
-else
-    echo "%{F$COLOR_VOL}%{B$COLOR_BLOCK}%{U$COLOR_VOL}%{+u}$ICON $SOUND_LEVEL%" | tee /tmp/.volume-pipe
+    echo "V%{F-}%{B$COLOR_BLOCK}%{U$COLOR_VOL}%{+u} $SOUND_LEVEL% " | tee $PANEL_FIFO
 fi
