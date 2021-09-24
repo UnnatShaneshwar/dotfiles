@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# Startup programs
+pgrep -x sxhkd > /dev/null || sxhkd &
+pgrep -x lemonbar > /dev/null || panel &
+pgrep -x trayer > /dev/null || trayer --edge top --align right --padding 9 --SetDockType true --SetPartialStrut true --expand true --monitor VGA1 --tint 0x282c34 --widthtype request --height 22 --transparent false --alpha 0 --iconspacing 3 &
+pgrep -x parcellite > /dev/null || parcellite &
+pgrep -x xfce-polkit > /dev/null || /usr/lib/xfce-polkit/xfce-polkit &
+
+# Workspaces
+ws1="web"
+ws2="dev"
+ws3="ter"
+ws4="dir"
+ws5="vid"
+ws6="vm"
+ws7="other"
+
+bspc monitor -d $ws1 $ws2 $ws3 $ws4 $ws5 $ws6 $ws7
+
+# Window config
+bspc config border_width 1
+bspc config window_gap 0
+bspc config focused_border_color "#6A7BA1"
+
+# Layout config
+bspc config split_ratio 0.52
+bspc config borderless_monocle true
+bspc config single_monocle true
+bspc config gapless_monocle false
