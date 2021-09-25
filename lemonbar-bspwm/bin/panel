@@ -28,7 +28,7 @@ bspc subscribe report > "$PANEL_FIFO" &
 
 . panel_colors
 
-cat "$PANEL_FIFO" | panel_bar | lemonbar \
+panel_bar < "$PANEL_FIFO" | lemonbar \
 																	-a 32 \
 																	-u 2 \
 																	-n "$PANEL_WM_NAME" \

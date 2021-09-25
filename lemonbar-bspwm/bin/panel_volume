@@ -12,7 +12,7 @@ MUTED=$(pactl list sinks | awk '/Mute/ { print $2 }')
 
 if [ "$MUTED" = "yes" ]
 then
-    echo "V%{F-}%{B$COLOR_BLOCK}%{U$COLOR_N_VOL}%{+u} MUTED " | tee $PANEL_FIFO
+    echo "V%{F-}%{B$COLOR_BLOCK}%{U$COLOR_N_VOL}%{+u} MUTED " > $PANEL_FIFO
 else
-    echo "V%{F-}%{B$COLOR_BLOCK}%{U$COLOR_VOL}%{+u} $SOUND_LEVEL% " | tee $PANEL_FIFO
+    echo "V%{F-}%{B$COLOR_BLOCK}%{U$COLOR_VOL}%{+u} $SOUND_LEVEL% " > $PANEL_FIFO
 fi
