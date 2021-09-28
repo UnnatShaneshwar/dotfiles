@@ -1,9 +1,83 @@
 body {
-	--newtab-textbox-background-color: #31363F !important;
-	--newtab-topsites-background-color: #31363F !important;
-	--newtab-background-button-color: #31363F !important;
-	--newtab-background-button-hover-color: #383D47 !important;
-	--customize-menu-background: #31363F !important;
-	--customize-menu-secondary-action-background: #31363F !important;
-	--customize-menu-secondary-action-background-hover: #383D47 !important;
+  --newtab-textbox-background-color: #31363f !important;
+  --newtab-topsites-background-color: #31363f !important;
+  --newtab-background-button-color: #31363f !important;
+  --newtab-background-button-hover-color: #383d47 !important;
+  --customize-menu-background: #31363f !important;
+  --customize-menu-secondary-action-background: #31363f !important;
+  --newtab-background-primary-text-color: #abb2bf !important;
+  --customize-menu-secondary-action-background-hover: #383d47 !important;
+}
+
+/* New tab Firefox Logo */
+
+.non-collapsible-section {
+  width: 100% !important;
+}
+
+.search-wrapper {
+  width: 100% !important;
+}
+
+.logo-and-wordmark {
+  width: 100% !important;
+  display: inline-block !important;
+}
+
+.logo-and-wordmark > .logo {
+  display: none !important;
+}
+
+.logo-and-wordmark > .wordmark {
+  width: 100% !important;
+  height: 100% !important;
+  margin-bottom: 20px;
+  text-align: center !important;
+  vertical-align: middle !important;
+  background: none !important;
+  position: relative !important;
+}
+
+.logo-and-wordmark > .wordmark::before {
+  content: "Firefox" !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  font-family: "Sharp Sans" !important;
+  font-weight: bold;
+  font-size: 80px !important;
+  color: #e0e5ef !important;
+}
+
+.search-inner-wrapper {
+  display: none !important;
+}
+
+/* New Tab TopSites */
+
+.tile {
+  display: none !important;
+}
+
+.top-sites-list {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  justify-content: center !important;
+  align-content: center !important;
+}
+
+.top-site-outer {
+  width: 100% !important;
+}
+
+.top-site-inner {
+}
+
+.top-site-inner .top-site-button * {
+}
+
+.top-site-inner .top-site-button span[dir="auto"] {
+  font-size: 15px !important;
 }
