@@ -180,19 +180,10 @@ mode "mouse" {
 
 
 exec --no-startup-id parcellite
-#exec --no-startup-id emote
-
-# Fix screen tearing
-exec_always --no-startup-id picom --experimental-backend
-
-# Use right_alt as mod
-exec_always --no-startup-id xmodmap ~/.config/.Xmodmap
+exec --no-startup-id emote
 
 # Polkit Authentication agent
-exec --no-startup-id lxsession
-
-# Background Image
-exec_always --no-startup-id feh --bg-scale '/home/unnat/Pictures/backgrounds/w_70.png'
+exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 
 
 #######################
