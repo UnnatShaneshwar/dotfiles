@@ -74,7 +74,7 @@ super + g
 ###################
 
 # set the window state
-super + {t, shift + t, @space, f}
+super + {t, shift + t, shift + f, f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -104,6 +104,9 @@ super + Tab
 # cycle between last and current workpace
 super + shift + Tab
 	bspc desktop -f last
+
+alt + Tab
+	bspc node -f next.local.window
 
 # focus the older or newer node in the focus history
 super + {o,i}
