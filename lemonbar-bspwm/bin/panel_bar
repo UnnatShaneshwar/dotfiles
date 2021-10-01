@@ -119,6 +119,7 @@ while read -r line ; do
 	increase_vol="pactl -- set-sink-volume 0 +5%; panel_volume"
 	decrease_vol="pactl -- set-sink-volume 0 -5%; panel_volume"
 	mute_vol="pactl set-sink-mute 0 toggle; panel_volume"
+	#printf "%s\n" "%{l}${wm}%{r}%{A:galendae:}${time}%{A} %{A:nm-connection-editor:}${network}%{A} %{A1:${increase_vol}:}%{A2:${mute_vol}:}%{A3:${decrease_vol}:}${volume}%{A}%{A}%{A} %{U$COLOR_TRAY}%{+u}       %{U-}%{-u}"
 	printf "%s\n" "%{l}${wm}%{r}${time} %{A:nm-connection-editor:}${network}%{A} %{A1:${increase_vol}:}%{A2:${mute_vol}:}%{A3:${decrease_vol}:}${volume}%{A}%{A}%{A} %{U$COLOR_TRAY}%{+u}       %{U-}%{-u}"
 	sleep 0.1;
 done
