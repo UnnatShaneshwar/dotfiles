@@ -13,6 +13,7 @@ body {
 
 .non-collapsible-section {
   width: 100% !important;
+  margin-bottom: 25px;
 }
 
 .search-wrapper {
@@ -31,7 +32,6 @@ body {
 .logo-and-wordmark > .wordmark {
   width: 100% !important;
   height: 100% !important;
-  margin-bottom: 20px;
   text-align: center !important;
   vertical-align: middle !important;
   background: none !important;
@@ -47,7 +47,7 @@ body {
   left: 0 !important;
   font-family: "Sharp Sans" !important;
   font-weight: bold;
-  font-size: 80px !important;
+  font-size: 75px !important;
   color: #e0e5ef !important;
 }
 
@@ -61,21 +61,28 @@ body {
   display: none !important;
 }
 
-.top-sites-list {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr 1fr !important;
-  justify-content: center !important;
-  align-content: center !important;
+.collapsible-section.top-sites {
+  padding: 0 !important;
 }
+
+/*.top-sites-list {*/
+  /*display: grid !important;*/
+  /*grid-template-columns: 1fr 1fr 1fr !important;*/
+  /*justify-content: center !important;*/
+  /*align-content: center !important;*/
+/*}*/
 
 .top-site-outer {
-  width: 100% !important;
+  width: 126.25px !important;
+  margin: 5px 0 !important;
 }
 
-.top-site-inner {
+.icon-pin-small {
+  fill: #465767 !important;
 }
 
-.top-site-inner .top-site-button * {
+.top-site-inner a.top-site-button {
+  padding: 8px 0 !important;
 }
 
 .top-site-inner .top-site-button span[dir="auto"] {
