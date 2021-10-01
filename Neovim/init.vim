@@ -1,17 +1,26 @@
 call plug#begin()
 Plug 'rakr/vim-one'
 Plug 'sheerun/vim-polyglot'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdcommenter'
 call plug#end()
 
 " Keybindings
 inoremap <C-j> <ESC>
+
 nmap <C-f> :set nohlsearch<CR>
 vmap <C-f> :set nohlsearch<CR>
-imap <C-f> :set nohlsearch<CR>
+
 nmap <C-q> :q<CR>
 nmap <C-s> :w<CR>
+
+nmap <C-m> :set nonumber norelativenumber<CR>
+
+nmap <C-e> :Vexplore<CR>
+
+nmap <C-p> :edit ~/
+
+nmap <C-h> :split ~/
+nmap <C-n> :vsplit ~/
 
 " Comment lines
 nmap ++ <plug>NERDCommenterToggle
@@ -21,7 +30,13 @@ vmap ++ <plug>NERDCommenterToggle
 set number relativenumber
 
 " Use mouse to navigate
-set mouse=a
+"set mouse=a
+
+" Restore cursor theme on exit
+augroup RestoreCursorShapeOnExit
+    autocmd!
+    autocmd VimLeave * set guicursor=a:ver20-blinkwait400-blinkoff400-blinkon400
+augroup END
 
 " Disable line wrapping
 set nowrap
@@ -35,7 +50,9 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-autocmd VimEnter * highlight Normal guibg=#282C34
+" Use Terminal background color
+autocmd VimEnter * hi Normal guibg=NONE ctermbg=NONE
+
 set background=dark
 colorscheme one
 
