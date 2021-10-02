@@ -1,2 +1,3 @@
-# dotfiles
-Important configuration files on linux
+# Dotfiles
+
+Some of my configuration files.
