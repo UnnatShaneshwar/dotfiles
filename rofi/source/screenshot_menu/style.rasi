@@ -2,14 +2,24 @@
 vim:ft=css
 */
 configuration {
-	font:                      		"Cascadia Mono 12";
-    disable-history:                false;
-    fullscreen:                     false;
-	hide-scrollbar: 				true;
-	sidebar-mode: 					false;
+  disable-history:                false;
+  fullscreen:                     false;
+	hide-scrollbar: 				        true;
+	sidebar-mode: 					        false;
 }
 
-@import "./colors.rasi"
+@import "~/.config/rofi/source/settings.rasi"
+
+/*colors*/
+* {
+  accent:           @gbcolor;
+  background:       #282c34;
+  background-light: #323640;
+  foreground:       #abb2bf;
+  border:           #61afef55;
+  on:               #98c379;
+  off:              #e06c75;
+}
 
 * {
     background-color:               @background;
@@ -18,9 +28,11 @@ configuration {
 
 window {
     transparency:                   "real";
-    border-radius:                  20px;
+    border-radius:                  1px;
+    border:                         1px;
+    border-color:                   @border;
     location:                       center;
-    width:                       	500px;
+    width:                        	650px;
     x-offset:                       0px;
     y-offset:                       0px;
 }
@@ -59,7 +71,7 @@ inputbar {
 }
 
 listview {
-    columns:						3;
+    columns:						4;
     lines:							1;
     spacing:                        15px;
     cycle:                          true;

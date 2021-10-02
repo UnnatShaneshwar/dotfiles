@@ -2,7 +2,6 @@
 vim:ft=css
 */
 configuration {
-    font:                           "Cascadia Mono 11";
     show-icons:                     false;
     drun-display-format:            "{name}";
     disable-history:                false;
@@ -11,14 +10,16 @@ configuration {
     sidebar-mode: 					        false;
 }
 
+@import "~/.config/rofi/source/settings.rasi"
+
 /*colors*/
 * {
     background:                     #282c34ff;
     background-alt:                 #323640ff;
     foreground:                     #abb2bfff;
-    border:                         none;
+    border:                         #61afef55;
     border-alt:                     none;
-    selected:                       #61afefff;
+    selected:                       @gbcolor;
     urgent:                         #DA4453FF;
 }
 
@@ -26,6 +27,8 @@ window {
     transparency:                   "real";
     background-color:               @background;
     text-color:                     @foreground;
+    border:                         1px;
+    border-color:                   @border;
     border-radius:                  0px;
     height:                         30%;
     width:                          54%;
@@ -35,7 +38,7 @@ window {
 }
 
 prompt {
-    font:							              "Cascadia Mono 11";
+    font:							              "Fira Mono Medium 11";
     enabled: 						            true;
     padding:                        0.5% 0.5% 0.5% 0%;
   	background-color: 				      @background-alt;
@@ -57,7 +60,7 @@ inputbar {
     expand:                         false;
     border:                  		    0.2% 0% 0.2% 0%;
     border-radius:                  12px;
-    border-color:                  	@border;
+    border-color:                   none;
     margin:                         0% 21.3% 0% 0%;
     padding:                        0.5%;
     position:                       center;
@@ -121,7 +124,7 @@ element selected.active {
 element-text {
     background-color:               #00000000;
     text-color:                     @foreground;
-  	font:       				      			"Cascadia Mono 32";
+    font:       				      			"monospace 32";
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;

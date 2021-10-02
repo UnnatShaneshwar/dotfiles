@@ -73,13 +73,15 @@ case $chosen in
 		ans=$(confirm_exit &)
 		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
 			if [[ "$DESKTOP_SESSION" == "xmonad" ]]; then
-				pkill -KILL -u $(id -un)
+				pkill -KILL -u $USER
 			elif [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
 				openbox --exit
 			elif [[ "$DESKTOP_SESSION" == "bspwm" ]]; then
-				bspc quit
+				bspc quit; killall panel
 			elif [[ "$DESKTOP_SESSION" == "i3" ]]; then
 				i3-msg exit
+			elif [[ "$DESKTOP_SESSION" == "" ]]; then
+				killall startx
 			fi
 		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
 			exit 0

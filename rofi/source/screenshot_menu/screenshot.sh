@@ -11,9 +11,10 @@ msg() {
 screen=""
 area=""
 window=""
+timed=""
 
 # Variable passed to rofi
-options="$screen\n$area\n$window"
+options="$screen\n$area\n$window\n$timed"
 
 chosen="$(echo -e "$options" | $rofi_command -p 'App : maim' -dmenu -selected-row 1)"
 
@@ -35,6 +36,13 @@ case $chosen in
     $window)
 		if [[ -f /usr/bin/maim ]]; then
 			maim -i $(xdotool getactivewindow) | tee ~/Pictures/Screenshots/$(date +%s).png | xclip -selection clipboard -t image/png -i
+		else
+			msg
+		fi
+				;;
+    $timed)
+		if [[ -f /usr/bin/maim ]]; then
+			maim -d 3 | tee ~/Pictures/Screenshots/$(date +%s).png | xclip -selection clipboard -t image/png -i
 		else
 			msg
 		fi

@@ -2,18 +2,18 @@
 Styles
 */
 
+
 configuration {
   show-icons:                     false;
 	icon-theme:                     "Reversal Blue Dark";
-  display-drun:                   "";
+  display-emoji:                  "";
   drun-display-format:            "{name}";
   disable-history:                false;
   fullscreen:                     false;
-	hide-scrollbar: 				        true;
 	sidebar-mode: 					        false;
 }
 
-@import "~/.config/rofi/source/settings.rasi"
+@import "/home/unnat/.config/rofi/source/settings.rasi"
 
 // colors
 * {
@@ -26,7 +26,6 @@ configuration {
 }
 
 window {
-  font:                           @gbfont;
   transparency:                   "real";
   background-color:               @bg;
   text-color:                     @fg;
@@ -48,12 +47,13 @@ prompt {
 }
 
 entry {
+  font:                           @gbfont;
   background-color:               @al;
   text-color:                     @fg;
   placeholder-color:              @fg;
   expand:                         true;
   horizontal-align:               0;
-  placeholder:                    "Search";
+  placeholder:                    "Search emoji";
   blink:                          true;
 }
 
@@ -70,9 +70,10 @@ inputbar {
 }
 
 listview {
+  font:                           "JoyPixels";
   background-color:               @al;
-  padding:                        10px;
-  columns:                        1;
+  padding:                        15px;
+  columns:                        5;
   lines:                          7;
   spacing:                        1%;
   cycle:                          true;
