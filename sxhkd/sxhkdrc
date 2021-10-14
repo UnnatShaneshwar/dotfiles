@@ -26,6 +26,10 @@ super + d
 super + s
 	~/.config/rofi/bin/screenshot_menu
 
+# emoji menu
+super + semicolon
+	~/.config/rofi/bin/emoji_menu
+
 # power menu
 super + shift + e
 	~/.config/rofi/bin/power_menu
@@ -97,16 +101,13 @@ super + {p,b,comma,period}
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
-# cycle trough active workspaces
-super + Tab
-	bspc desktop -f next.occupied.local
+# cycle trough active workspaces & cycle between last and current workpace
+super + {_,shift + } Tab
+	bspc desktop -f {next.occupied.local, last}
 
-# cycle between last and current workpace
-super + shift + Tab
-	bspc desktop -f last
-
-alt + Tab
-	bspc node -f next.local.window
+# cycle windows
+alt + {_,shift + } Tab
+      bspc node -f {next,prev}.local.!hidden.window.!locked
 
 # focus the older or newer node in the focus history
 super + {o,i}
