@@ -10,6 +10,10 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
+######################################
+##########    Scripts     ############
+######################################
+
 # Date
 while panel_time; do
 	sleep 40
@@ -20,8 +24,29 @@ while panel_network; do
 	sleep 10
 done > "$PANEL_FIFO" &
 
+# Playerctl - Music
+while panel_playerctl; do
+	sleep 1.5
+done > "$PANEL_FIFO" &
+
+# Traypad
+#panel_traypad > "$PANEL_FIFO" &
+
 # Volume
 panel_volume &
+
+# Memory
+#while panel_mem; do
+	#sleep 2
+#done > "$PANEL_FIFO" &
+
+# CPU
+#while panel_cpu; do
+	#sleep 2
+#done > "$PANEL_FIFO" &
+
+#############################################
+#############################################
 
 # WM data
 bspc subscribe report > "$PANEL_FIFO" &
@@ -37,6 +62,7 @@ panel_bar < "$PANEL_FIFO" | lemonbar \
 																	-f 'Font Awesome 5 Free'-10 \
 																	-f 'Font Awesome 5 Brands'-10 \
 																	-f 'Font Awesome 5 Free Solid'-10 \
+																	-f 'DejaVu Sans'-10 \
 																	-F "$COLOR_DEFAULT_FG" \
 																	-B "$COLOR_DEFAULT_BG" \
 																	-U "$COLOR_DEFAULT_BG" \

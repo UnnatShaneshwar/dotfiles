@@ -10,14 +10,32 @@ while read -r line ; do
 			# time output
 			time="${line#?}%{B-}%{F-}%{U-}"
 			;;
+
 		N*)
 			# network output
-			network="${line#?}%{B-}%{F-}%{U-}"
+			network="%{A:nm-connection-editor:}${line#?}%{A}%{B-}%{F-}%{U-}"
 			;;
+
 		V*)
 			# volume output
-			volume="${line#?}%{B-}%{F-}%{U-}"
+			volume="%{A1:${increase_vol}:}%{A2:${mute_vol}:}%{A3:${decrease_vol}:}${line#?}%{A}%{A}%{A}%{B-}%{F-}%{U-}"
 			;;
+
+		L*)
+			# playerctl - music output
+			playerctl="%{A:playerctl play-pause:}${line#?}%{A}%{B-}%{F-}%{U-}"
+			;;
+
+		#M*)
+			## memory output
+			#mem="${line#?}%{B-}%{F-}%{U-}"
+			#;;
+
+		#C*)
+			## cpu output
+			#cpu="${line#?}%{B-}%{F-}%{U-}"
+			#;;
+
 		W*)
 			# bspwm's state
 			wm=
@@ -43,7 +61,7 @@ while read -r line ; do
 								;;
 						esac
 						[ $num_mon -lt 2 ] && shift && continue
-						wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc monitor -f ${name}:} ${name} %{A}%{B-}%{F-}"
+						wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc monitor -f ${name}:} ${name} %{A}%{B-}%{F-}%{-u}"
 						;;
 					[fFoOuU]*)
 						case $item in
@@ -109,17 +127,20 @@ while read -r line ; do
 						;;
 					[LTG]*)
 						# layout, state and flags
-						wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
+						#wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
 						;;
 				esac
 				shift
 			done
 			;;
 	esac
+
 	increase_vol="pactl -- set-sink-volume 0 +5%; panel_volume"
 	decrease_vol="pactl -- set-sink-volume 0 -5%; panel_volume"
 	mute_vol="pactl set-sink-mute 0 toggle; panel_volume"
-	#printf "%s\n" "%{l}${wm}%{r}%{A:galendae:}${time}%{A} %{A:nm-connection-editor:}${network}%{A} %{A1:${increase_vol}:}%{A2:${mute_vol}:}%{A3:${decrease_vol}:}${volume}%{A}%{A}%{A} %{U$COLOR_TRAY}%{+u}       %{U-}%{-u}"
-	printf "%s\n" "%{l}${wm}%{r}${time} %{A:nm-connection-editor:}${network}%{A} %{A1:${increase_vol}:}%{A2:${mute_vol}:}%{A3:${decrease_vol}:}${volume}%{A}%{A}%{A} %{U$COLOR_TRAY}%{+u}       %{U-}%{-u}"
+
+	tray_space="%{U$COLOR_TRAY}%{+u}       %{U-}%{-u}"
+
+	printf "%s\n" "%{l}${wm} ${playerctl}%{r}${time} ${network} ${volume} ${tray_space}"
 	sleep 0.1;
 done

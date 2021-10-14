@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. panel_colors
+
+#trayWidth=$(xprop -name panel -f WM_SIZE_HINTS 32i ' $5\n' WM_NORMAL_HINTS | awk '{print $2}')
+#pad=""
+
+#for i in $(seq $trayWidth)
+#do
+	#pad="${pad} "
+#done
+
+echo "P%{B$COLOR_BLOCK}%{U$COLOR_TRAY}%{+u}       "

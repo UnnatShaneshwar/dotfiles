@@ -1,0 +1,30 @@
+#!/bin/bash
+# Based on https://aur.archlinux.org/packages/playerctl/
+
+if [ $? == 1 ]; then
+    exit 0
+fi;
+
+PLAYER_STATUS=$(playerctl status)
+
+if [[ $PLAYER_STATUS = "Playing" ]] || [[ $PLAYER_STATUS = "Paused" ]]; then
+  CUR_ICON=">"
+  CUR_COLOR=""
+
+
+  . panel_colors
+
+  if [[ "${PLAYER_STATUS}" = "Paused" ]]; then
+    CUR_COLOR="$COLOR_PLAYER_PAUSED"
+  elif [[ "${PLAYER_STATUS}" = "Playing" ]]; then
+    CUR_COLOR="$COLOR_PLAYER_PLAY"
+  fi
+
+  INFO_TITLE=$(playerctl metadata title)
+
+  if [[ "${INFO_TITLE}" != "" ]]; then
+    echo "L%{F$CUR_COLOR}%{B$COLOR_BLOCK}%{U$CUR_COLOR}%{-u} ${CUR_ICON} ${INFO_TITLE} "
+  fi
+else
+  echo "L"
+fi;
