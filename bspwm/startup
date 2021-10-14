@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Startup programs
+pgrep -x sxhkd > /dev/null || sxhkd &
+#pgrep -x buckle > /dev/null || buckle &
+pgrep -x parcellite > /dev/null || parcellite &
+pgrep -x xfce-polkit > /dev/null || /usr/lib/xfce-polkit/xfce-polkit &
+pgrep -x lemonbar > /dev/null || panel &
+sleep 0.3
+pgrep -x trayer > /dev/null || trayer \
+                                --edge top \
+                                --align right \
+                                --distancefrom right \
+                                --distance 0 \
+                                --padding 6 \
+                                --SetDockType true \
+                                --SetPartialStrut true \
+                                --expand true \
+                                --monitor VGA1 \
+                                --tint 0x33373DFF \
+                                --widthtype request \
+                                --heighttype pixel \
+                                --height 20 \
+                                --transparent false \
+                                --alpha 0 \
+                                --iconspacing 3 &
+
