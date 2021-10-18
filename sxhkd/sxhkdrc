@@ -1,6 +1,14 @@
 ##############################
 ### wm independent hotkeys ###
 ##############################
+# mark desktop
+
+#super + i
+	#~/.config/bspwm/setHidden.sh
+
+# cycle desktop
+#super + z
+	#~/.config/bspwm/cycleNH.sh
 
 # terminal emulator
 super + Return
@@ -10,13 +18,17 @@ super + Return
 super + e
 	thunar
 
-# file explorer
+# web browser
 super + a
 	firefox
 
-# file explorer
+# text editor
 super + n
 	alacritty -e nvim
+
+# pause player
+super + space
+	playerctl play-pause
 
 # program launcher
 super + d

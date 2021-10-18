@@ -10,4 +10,4 @@
 	#pad="${pad} "
 #done
 
-echo "P%{B$COLOR_BLOCK}%{U$COLOR_TRAY}%{+u}       "
+echo "P%{B$COLOR_BLOCK}%{U$COLOR_TRAY}       "

@@ -12,7 +12,7 @@ pgrep -x trayer > /dev/null || trayer \
                                 --align right \
                                 --distancefrom right \
                                 --distance 0 \
-                                --padding 6 \
+                                --padding 4 \
                                 --SetDockType true \
                                 --SetPartialStrut true \
                                 --expand true \

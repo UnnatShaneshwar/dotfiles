@@ -1,0 +1,12 @@
+@import "~/.config/rofi/source/settings.rasi"
+
+/*colors*/
+* {
+    background:                     #282c34ff;
+    background-alt:                 #323640ff;
+    foreground:                     #abb2bfff;
+    border:                         @gbbordercolor;
+    border-alt:                     none;
+    selected:                       @gbcolor;
+    urgent:                         #DA4453FF;
+}

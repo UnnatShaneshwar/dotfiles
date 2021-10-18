@@ -3,7 +3,6 @@ Plug 'rakr/vim-one'
 Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdcommenter'
 call plug#end()
-
 " Keybindings
 inoremap <C-j> <ESC>
 
@@ -17,10 +16,10 @@ nmap <C-m> :set nonumber norelativenumber<CR>
 
 nmap <C-e> :Vexplore<CR>
 
-nmap <C-p> :edit ~/
+nmap <C-p> :edit 
 
-nmap <C-h> :split ~/
-nmap <C-n> :vsplit ~/
+nmap <C-h> :split<CR>
+nmap <C-n> :vsplit<CR>
 
 " Comment lines
 nmap ++ <plug>NERDCommenterToggle
@@ -28,6 +27,10 @@ vmap ++ <plug>NERDCommenterToggle
 
 " Line numbers
 set number relativenumber
+
+" Show indent lines
+set list
+set listchars=tab:\│\ ,
 
 " Use mouse to navigate
 "set mouse=a

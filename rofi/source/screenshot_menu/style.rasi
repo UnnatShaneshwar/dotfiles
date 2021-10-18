@@ -14,9 +14,9 @@ configuration {
 * {
   accent:           @gbcolor;
   background:       #282c34;
-  background-light: #323640;
+  background-light: #282c34;
   foreground:       #abb2bf;
-  border:           #61afef55;
+  border:           @gbbordercolor;
   on:               #98c379;
   off:              #e06c75;
 }
@@ -40,20 +40,18 @@ window {
 prompt {
     enabled: 						true;
     padding:                        10px;
-	background-color: 				@background;
-	text-color: 					@accent;
-    border:                  		0px 2px 0px 2px;
-    border-radius:                  12px;
-    border-color:                  	@accent;
+    background-color:               @background;
+    border:                         0px 2px 0px 2px;
+    border-radius:                  4px;
+    border-color:                   @accent;
 }
 
 textbox-prompt-colon {
 	expand: 						false;
 	str: 							" Screenshot ";
 	background-color: 				@accent;
-	text-color: 					@background;
     padding:                        10px 10px 0px 10px;
-    border-radius:                  12px;
+    border-radius:                  4px;
 }
 
 inputbar {
@@ -90,7 +88,9 @@ element {
     background-color:               @background-light;
     text-color:                     @foreground;
     orientation:                    vertical;
-    border-radius:                  20px;
+    border:                         1px;
+    border-color:                   @gbbordercolor;
+    border-radius:                  10px;
 }
 
 
@@ -98,7 +98,7 @@ element normal.urgent,
 element alternate.urgent {
     background-color:               @off;
     text-color:                     @background;
-    border-radius:                  20px;
+    border-radius:                  10px;
 }
 
 element normal.active,
@@ -110,9 +110,9 @@ element alternate.active {
 element selected {
     background-color:               @accent;
     text-color:                     @background;
-    border:                  		0px;
-    border-radius:                  20px;
-    border-color:                  	@border;
+    border:                         0px;
+    border-radius:                  10px;
+    border-color:                   @border;
 }
 
 element selected.urgent {
@@ -135,6 +135,5 @@ element-text {
 }
 
 element-text selected {
-    text-color:                     @background;
     background-color:               #00000000;
 }

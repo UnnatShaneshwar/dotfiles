@@ -69,7 +69,7 @@ if [[ "${DISPLAY}" != "perc" ]]; then
   fi
 fi
 
-echo "M%{F-}%{B$COLOR_BLOCK}%{U$COLOR_MEM}%{+u} ${MEMINFO} "
+echo "M%{F-}%{B$COLOR_BLOCK}%{U$COLOR_MEM} ${MEMINFO} "
 
 if [[ "${SOURCE_PERC}" -gt "${URGENT_VALUE}" ]]; then
   exit 33

@@ -1,4 +1,5 @@
 * {
 	gbfont: "Fira Mono Medium 10";
-	gbcolor: #61afefff;
+	gbcolor: #E0E5EF12;
+	gbbordercolor: #3E424Aff;
 }

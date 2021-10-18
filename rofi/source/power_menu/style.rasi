@@ -15,9 +15,9 @@ configuration {
 /*colors*/
 * {
     background:                     #282c34ff;
-    background-alt:                 #323640ff;
+    background-alt:                 #282c34ff;
     foreground:                     #abb2bfff;
-    border:                         #61afef55;
+    border:                         @gbbordercolor;
     border-alt:                     none;
     selected:                       @gbcolor;
     urgent:                         #DA4453FF;
@@ -40,17 +40,21 @@ window {
 prompt {
     font:							              "Fira Mono Medium 11";
     enabled: 						            true;
-    padding:                        0.5% 0.5% 0.5% 0%;
-  	background-color: 				      @background-alt;
-  	text-color: 					          @foreground;
+    padding:                        1%;
+  	background-color: 				      @background;
+ 	 	text-color: 					          @foreground;
+    border:                         0px 2px 0px 2px;
+    border-radius:                  4px;
+    border-color:                   @selected;
 }
 
 textbox-prompt-colon {
     expand: 						            false;
-    str: 							              "System |";
-    background-color: 				      @background-alt;
+    str: 							              "System";
+  	background-color: 				      @selected;
     text-color: 					          @foreground;
-    padding:                        0.5% 0.5% 0.5% 0%;
+    border-radius:                  4px;
+    padding:                        1%;
 }
 
 inputbar {
@@ -58,12 +62,11 @@ inputbar {
     background-color:               @background-alt;
     text-color:                     @foreground;
     expand:                         false;
-    border:                  		    0.2% 0% 0.2% 0%;
-    border-radius:                  12px;
-    border-color:                   none;
+    border-radius:                  4px;
     margin:                         0% 21.3% 0% 0%;
     padding:                        0.5%;
     position:                       center;
+    spacing:                        12px;
 }
 
 listview {
@@ -86,7 +89,9 @@ element {
     background-color:               @background-alt;
     text-color:                     @foreground;
     orientation:                    horizontal;
-    border-radius:                  25px;
+    border-radius:                  14px;
+    border:                         1px;
+    border-color:                   @gbbordercolor;
 }
 
 
@@ -105,10 +110,6 @@ element alternate.active {
 
 element selected {
     background-color:               @selected;
-    text-color:                     @background;
-    border:                      		0.2% 0% 0.2% 0%;
-    border-radius:                  25px;
-    border-color:                  	@border;
 }
 
 element selected.urgent {
@@ -133,5 +134,4 @@ element-text {
 
 element-text selected {
     background-color:                 #00000000;
-    text-color:                       @background;
 }

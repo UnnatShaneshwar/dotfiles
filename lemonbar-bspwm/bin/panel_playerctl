@@ -5,9 +5,9 @@ if [ $? == 1 ]; then
     exit 0
 fi;
 
-PLAYER_STATUS=$(playerctl status)
+PLAYER_STATUS=$(playerctl status 2>&1)
 
-if [[ $PLAYER_STATUS = "Playing" ]] || [[ $PLAYER_STATUS = "Paused" ]]; then
+if [[ ${PLAYER_STATUS} = "Playing" ]] || [[ ${PLAYER_STATUS} = "Paused" ]]; then
   CUR_ICON=">"
   CUR_COLOR=""
 
