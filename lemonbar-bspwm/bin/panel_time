@@ -1,8 +1,0 @@
-#!/bin/sh
-
-. panel_colors
-
-datetime=$(date +'%a, %b %d - %I:%M %p')
-
-echo "T%{F-}%{B$COLOR_BLOCK}%{U$COLOR_SYS} $datetime "
-

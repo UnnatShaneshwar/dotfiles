@@ -1,0 +1,6 @@
+* {
+	gbfont: "JetBrainsMono Nerd Font Medium 10";
+	gbfontlarge: "JetBrainsMono Nerd Font Regular 11";
+	gbcolor: #E0E5EF12;
+	gbbordercolor: #3E424Aff;
+}

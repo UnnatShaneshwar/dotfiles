@@ -1,0 +1,78 @@
+#! /bin/sh
+
+if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+	printf "%s\n" "The panel is already running." >&2
+	exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+######################################
+##########    Scripts     ############
+######################################
+
+# Date
+while true; do
+  panel_time > "$PANEL_FIFO"
+	sleep 20
+done &
+
+# Network
+while true; do
+  panel_network > "$PANEL_FIFO"
+	sleep 5
+done &
+
+# Playerctl - Music
+while true; do
+  panel_playerctl > "$PANEL_FIFO"
+	sleep 1
+done &
+
+# Traypad
+#panel_traypad > "$PANEL_FIFO" &
+
+# Volume
+panel_volume &
+
+# Memory
+while true; do
+  panel_mem > "$PANEL_FIFO"
+	sleep 3
+done &
+
+# CPU
+while true; do
+  panel_cpu > "$PANEL_FIFO"
+	sleep 3
+done &
+
+#############################################
+#############################################
+
+# WM data
+bspc subscribe report > "$PANEL_FIFO" &
+
+. panel_colors
+
+panel_bar < "$PANEL_FIFO" | lemonbar \
+																	-a 32 \
+																	-u 1 \
+																	-o 0 \
+																	-n "$PANEL_WM_NAME" \
+																	-g x20 \
+																	-f "JetBrainsMono Nerd Font:Regular:size=10" \
+																	-f 'Noto Sans Devanagari'-10 \
+																	-F "$COLOR_DEFAULT_FG" \
+																	-B "$COLOR_DEFAULT_BG" \
+																	-U "$COLOR_DEFAULT_BG" \
+																	| sh &
+
+
+wid=$(xdo id -m -a "$PANEL_WM_NAME")
+xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+wait

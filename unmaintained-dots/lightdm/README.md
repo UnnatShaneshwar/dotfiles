@@ -1,0 +1,1 @@
+## Location: ```/etc/lightdm/```

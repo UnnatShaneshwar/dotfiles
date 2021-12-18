@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. panel_colors
+
+
+if ping -q -c 1 -W 1 8.8.8.8 > /dev/null; then
+  color="$COLOR_NET"
+  text="Connected"
+else
+  color="$COLOR_N_NET"
+  text="No-Connection"
+fi
+icon=""
+
+# echo "N%{F-}%{B-}%{B$COLOR_BLOCK}%{U$color} $text "
+echo "N%{B$COLOR_BLOCK}%{F$color} $icon $text " > $PANEL_FIFO
+

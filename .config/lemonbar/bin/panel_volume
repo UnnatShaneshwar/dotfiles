@@ -1,0 +1,40 @@
+#!/bin/bash
+
+VOLUME_MUTE="X"
+VOLUME_LOW=""
+VOLUME_MID=""
+VOLUME_HIGH=""
+SOUND_LEVEL=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
+    head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+MUTED=$(pactl list sinks | awk '/Mute/ { print $2 }')
+
+. panel_colors
+
+if [ "$MUTED" = "yes" ]
+then
+  volume_icon="$VOLUME_MUTE"
+  color="$COLOR_N_VOL"
+  text=""
+  # text=" MUTED "
+
+else
+  color="$COLOR_VOL"
+  text="$SOUND_LEVEL%% "
+
+  if [ "$SOUND_LEVEL" -lt 25 ]
+  then
+    volume_icon="$VOLUME_LOW"
+  elif [ "$SOUND_LEVEL" -lt 45 ]
+  then
+    volume_icon="$VOLUME_MID"
+  else
+    volume_icon="$VOLUME_HIGH"
+  fi
+fi
+
+# icon="%{F$BLACK}%{B$color} $volume_icon "
+icon="$volume_icon"
+
+# echo "V%{F-}%{B$COLOR_BLOCK}%{U$color}$text" > $PANEL_FIFO
+echo "V%{B$COLOR_BLOCK}%{F$color} $icon $text" > $PANEL_FIFO
+

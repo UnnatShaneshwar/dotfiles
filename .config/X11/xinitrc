@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Important programs
+if [[ -f $HOME/.config/X11/Xresources ]]; then xrdb -merge "$HOME/.config/X11/Xresources"; fi  &
+xmodmap $HOME/.config/X11/Xmodmap &
+#setxkbmap -option "caps:swapescape"
+picom --experimental-backends &
+~/.fehbg &
+xsetroot -cursor_name arrow &
+dunst &
+ibus-daemon &
+
+# i3
+#export DESKTOP_SESSION="i3"
+#exec i3
+
+# XMonad
+#export DESKTOP_SESSION="xmonad"
+#exec xmonad
+
+# BSPWM
+export DESKTOP_SESSION="bspwm"
+exec bspwm

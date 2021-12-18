@@ -1,3 +1,1 @@
-# Dotfiles
-
-Some of my configuration files.
+## BSPWM+lemonbar setup with some other dots
