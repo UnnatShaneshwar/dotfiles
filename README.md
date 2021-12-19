@@ -1,6 +1,6 @@
-## BSPWM+lemonbar setup with some other dots
+### bspwm + lemonbar setup with some other dots
 
-Here are some screenshots
+## Screenshots
 
 ![screenshot1](./images/rice01.png)
 ![screenshot2](./images/rice02.png)
