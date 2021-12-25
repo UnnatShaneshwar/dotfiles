@@ -60,11 +60,11 @@ bspc subscribe report > "$PANEL_FIFO" &
 
 panel_bar < "$PANEL_FIFO" | lemonbar \
 																	-a 32 \
-																	-u 1 \
+																	-u 2 \
 																	-o 0 \
 																	-n "$PANEL_WM_NAME" \
-																	-g x20 \
-																	-f "JetBrainsMono Nerd Font:Regular:size=10" \
+																	-g x21 \
+																	-f "JetBrainsMono Nerd Font:weight=110:size=10" \
 																	-f 'Noto Sans Devanagari'-10 \
 																	-F "$COLOR_DEFAULT_FG" \
 																	-B "$COLOR_DEFAULT_BG" \

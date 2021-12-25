@@ -5,6 +5,7 @@
 num_mon=$(bspc query -M | wc -l)
 underline="%{-u}"
 reset="%{B-}%{F-}%{U-}"
+ws_space=" "
 
 while read -r line ; do
 	case $line in
@@ -81,7 +82,7 @@ while read -r line ; do
 									# focused free desktop
 									FG=$COLOR_FOCUSED_FREE_FG
 									BG=$COLOR_FOCUSED_FREE_BG
-									UL=$BLUE
+									UL=$BG
 								else
 									# active free desktop
 									FG=$COLOR_FREE_FG
@@ -100,7 +101,7 @@ while read -r line ; do
 									# focused occupied desktop
 									FG=$COLOR_FOCUSED_OCCUPIED_FG
 									BG=$COLOR_FOCUSED_OCCUPIED_BG
-									UL=$BLUE
+									UL=$BG
 								else
 									# active occupied desktop
 									FG=$COLOR_OCCUPIED_FG
@@ -128,7 +129,7 @@ while read -r line ; do
 								fi
 								;;
 						esac
-						wm="${wm}%{F${FG}}%{B${BG}}%{U${UL}}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}%{-u}"
+						wm="${wm}%{F${FG}}%{B${BG}}%{U${UL}}$underline%{A:bspc desktop -f ${name}:}$ws_space${name}$ws_space%{A}%{B-}%{F-}%{-u}"
 						;;
 					[LTG]*)
 						# layout, state and flags

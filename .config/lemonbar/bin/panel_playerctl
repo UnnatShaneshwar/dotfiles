@@ -7,8 +7,10 @@ if [ $? == 1 ]; then
     exit 0
 fi;
 
-PLAYER_STATUS=$(playerctl status 2>&1)
-PLAYER_NAME=$(playerctl metadata --format '{{playerName}}')
+PLAYERCTL_CMD="playerctl -i firefox"
+
+PLAYER_STATUS=$($PLAYERCTL_CMD status 2>&1)
+PLAYER_NAME=$($PLAYERCTL_CMD metadata --format '{{playerName}}')
 
 icon=""
 
@@ -22,8 +24,8 @@ if [[ ${PLAYER_STATUS} = "Playing" ]] || [[ ${PLAYER_STATUS} = "Paused" ]]; then
     CUR_COLOR="$COLOR_PLAYER_PLAY"
   fi
 
-  INFO_TITLE=$(playerctl metadata title)
-  INFO_ARTIST=$(playerctl metadata artist)
+  INFO_TITLE=$($PLAYERCTL_CMD metadata title)
+  INFO_ARTIST=$($PLAYERCTL_CMD metadata artist)
 
   if [[ "${INFO_TITLE}" != "" ]]; then
     if [[ "${PLAYER_NAME}" = "firefox" ]]; then
@@ -33,7 +35,11 @@ if [[ ${PLAYER_STATUS} = "Playing" ]] || [[ ${PLAYER_STATUS} = "Paused" ]]; then
         text="${INFO_TITLE}"
       fi;
     else
-      text="${INFO_ARTIST} - ${INFO_TITLE}"
+      if [[ "$(echo ${#INFO_TITLE})" -gt 58 ]]; then
+        text="${INFO_ARTIST}"
+      else
+        text="${INFO_ARTIST} - ${INFO_TITLE}"
+      fi;
     fi
     echo "L%{F$CUR_COLOR}%{B$COLOR_BLOCK}%{U$CUR_COLOR}%{-u} $icon $text "
   fi
