@@ -17,19 +17,21 @@
     # will be ignored.
     follow = mouse
 
-    # The geometry of the window:
-    #   [{width}]x{height}[+/-{x}+/-{y}]
-    # The geometry of the message window.
-    # The height is measured in number of notifications everything else
-    # in pixels.  If the width is omitted but the height is given
-    # ("-geometry x2"), the message window expands over the whole screen
-    # (dmenu-like).  If width is 0, the window expands to the longest
-    # message displayed.  A positive x is measured from the left, a
-    # negative from the right side of the screen.  Y is measured from
-    # the top and down respectively.
-    # The width can be negative.  In this case the actual width is the
-    # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-20+20"
+    ### Geometry ###
+
+    # dynamic width from 0 to 300
+    # width = (0, 300)
+    # constant width of 300
+    width = 300
+
+    # The maximum height of a single notification, excluding the frame.
+    height = 300
+
+    # Position the notification in the top right corner
+    origin = top-right
+
+    # Offset from the origin
+    offset = 10x35
 
     # Turn on the progess bar
     progress_bar = true
@@ -84,7 +86,7 @@
     frame_width = 1
 
     # Defines color of the frame around the notification window.
-    frame_color = "#5c6370"
+    frame_color = "#3E424A"
 
     # Define a color for the separator.
     # possible values are:
@@ -106,7 +108,7 @@
 
     ### Text ###
 
-    font = Fira Mono 12
+    font = JetBrainsMono Nerd Font 12
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -195,7 +197,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Reversal-blue-dark/status/16:/usr/share/icons/Reversal-blue-dark/devices/16
+    icon_path = /usr/share/icons/Atom One Dark/16x16/status/:/usr/share/icons/Atom One Dark/16x16/devices/
 
     ### History ###
 
