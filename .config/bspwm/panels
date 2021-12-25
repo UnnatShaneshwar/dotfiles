@@ -22,7 +22,7 @@ sleep 0.3
 pgrep -x stalonetray > /dev/null || stalonetray \
 																		 --background "#282C34" \
 																		 --icon-size 14 \
-																		 --geometry 2x1-2+2 \
+																		 --geometry 2x1-7+7 \
 																		 --grow-gravity E \
 																		 --icon-gravity E \
 																		 --kludges force_icons_size &
