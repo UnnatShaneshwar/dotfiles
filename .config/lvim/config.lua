@@ -72,8 +72,12 @@ require("toggleterm").setup {
   -- shell = vim.o.shell,
 }
 
--- require("cmp").setup {
--- }
+require("cmp").setup {
+  preselect = true,
+  completion = {
+    completeopt = 'menu,menuone,noinsert'
+  }
+}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
