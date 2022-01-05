@@ -29,6 +29,7 @@ window {
 	border:                         1px;
 	border-color:                   @bd;
   border-radius:                  4px;
+  padding:                        0.5%;
 	width:                          35%;
   location:                       center;
   x-offset:                       0;
@@ -67,7 +68,7 @@ inputbar {
 
 listview {
   background-color:               @al;
-  padding:                        0px;
+  padding:                        0;
   columns:                        1;
   lines:                          7;
   spacing:                        1%;
@@ -92,7 +93,7 @@ element {
   orientation:                    horizontal;
   border-radius:                  0%;
   padding:                        0.8% 1%;
-  margin:                         0.1% 0.5%;
+  margin:                         0.1% 0;
   border-radius:                  3px;
 }
 
